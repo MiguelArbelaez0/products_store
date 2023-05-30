@@ -26,6 +26,11 @@ class _HomeScreenState extends State<HomeScreen> {
       appBar: AppBar(
         title: Text('Products'),
       ),
+      body: StreamBuilder<Object>(
+          stream: null,
+          builder: (context, snapshot) {
+            return Text("");
+          }),
     );
   }
 }
