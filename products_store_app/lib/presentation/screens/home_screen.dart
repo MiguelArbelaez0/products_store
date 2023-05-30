@@ -24,13 +24,8 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Products'),
+        title: Text('Lista de productos'),
       ),
-      body: StreamBuilder<Object>(
-          stream: null,
-          builder: (context, snapshot) {
-            return Text("");
-          }),
     );
   }
 }
