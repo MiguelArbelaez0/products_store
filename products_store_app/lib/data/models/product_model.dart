@@ -9,9 +9,6 @@ class ProductModel extends Product {
       required super.description,
       required super.image});
 
-  factory ProductModel.fromJson(String str) =>
-      ProductModel.fromMap(json.decode(str));
-
   String toJson() => json.encode(toMap());
 
   factory ProductModel.fromMap(Map<String, dynamic> json) => ProductModel(

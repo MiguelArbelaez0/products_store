@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:products_store_app/data/repository_impl/impl_repositori.dart';
+
+import 'domain/use_cases/get_product_use_case.dart';
 
 void main() {
   runApp(const MyApp());
@@ -49,7 +52,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
-
+  final GetProductsUseCase _getProductsUseCase = GetProductsUseCase();
   void _incrementCounter() {
     setState(() {
       // This call to setState tells the Flutter framework that something has
@@ -59,6 +62,14 @@ class _MyHomePageState extends State<MyHomePage> {
       // called again, and so nothing would appear to happen.
       _counter++;
     });
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    _getProductsUseCase.invokeGetProducts();
+
+    super.initState();
   }
 
   @override
