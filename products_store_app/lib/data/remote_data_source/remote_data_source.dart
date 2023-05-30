@@ -1,15 +1,12 @@
 import 'package:http/http.dart' as http;
 
 class RemoteDataSource {
-  Future<void> onGetProduct() async {
-    Uri url = Uri.parse('https://fakestoreapi.com/products');
+  void onGetProduct() {
+    Uri url = Uri.http("https://fakestoreapi.com/products");
 
-    http.Response response = await http.get(
-      url,
-    );
-
-    if (response.statusCode == 200) {
-    } else if (response.statusCode == 400) {
-    } else {}
+    http.get(url).then((response) {
+      if (response.statusCode == 200) {
+      } else if (response.statusCode == 400) {}
+    });
   }
 }
