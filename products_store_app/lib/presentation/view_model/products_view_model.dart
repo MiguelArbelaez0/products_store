@@ -32,5 +32,7 @@ class ProductsViewModel {
 
   Stream<List<Product>> get productsStream => _productsController.stream;
 
-  invokeProducts() async {}
+  invokeProducts() async {
+    await _getProductsUseCase.invokeGetProducts();
+  }
 }
