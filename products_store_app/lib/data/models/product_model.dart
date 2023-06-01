@@ -14,7 +14,7 @@ class ProductModel extends Product {
   factory ProductModel.fromMap(Map<String, dynamic> json) => ProductModel(
         id: json["id"],
         title: json["title"],
-        price: json["price"],
+        price: double.parse(json["price"].toString()),
         description: json["description"],
         image: json["image"],
       );
