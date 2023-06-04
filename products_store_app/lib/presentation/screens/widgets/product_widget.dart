@@ -8,6 +8,10 @@ class ProductWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
+      margin: EdgeInsets.only(
+        left: 20,
+        right: 20,
+      ),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
       child: Column(
         children: [
@@ -23,7 +27,12 @@ class ProductWidget extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text("${product.price}"),
+              Text(
+                "${product.price}",
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
               IconButton(onPressed: () {}, icon: Icon(Icons.add))
             ],
           ),

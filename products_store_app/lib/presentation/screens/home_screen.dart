@@ -35,9 +35,9 @@ class _HomeScreenState extends State<HomeScreen> {
           return GridView.builder(
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 2,
-              crossAxisSpacing: 20,
               mainAxisSpacing: 20,
             ),
+            padding: const EdgeInsets.only(top: 20),
             itemCount: products.length,
             itemBuilder: (BuildContext context, int index) {
               return ProductWidget(product: products[index]);

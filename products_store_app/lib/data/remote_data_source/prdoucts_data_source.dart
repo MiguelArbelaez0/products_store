@@ -3,8 +3,8 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:products_store_app/data/models/product_model.dart';
 
-class RemoteDataSource {
-  RemoteDataSource();
+class ProductsDataSource {
+  ProductsDataSource();
   Future<List<ProductModel>> onGetProduct() async {
     Uri url = Uri.parse("https://fakestoreapi.com/products");
 
