@@ -17,6 +17,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     productsViewModel.invokeProducts();
+    productsViewModel.invokeCategories();
     super.initState();
   }
 
@@ -26,24 +27,50 @@ class _HomeScreenState extends State<HomeScreen> {
       appBar: AppBar(
         title: const Text('Lista de productos'),
       ),
-      body: StreamBuilder<List<Product>>(
-        stream: productsViewModel.productsStream,
-        initialData: const [],
-        builder: (BuildContext context, AsyncSnapshot snapshot) {
-          final List<Product> products = snapshot.data;
-
-          return GridView.builder(
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2,
-              mainAxisSpacing: 20,
+      body: Column(
+        children: [
+          SizedBox(
+            height: 200,
+            child: StreamBuilder<List<String>>(
+              stream: productsViewModel.categoryStrem,
+              initialData: const [],
+              builder: (BuildContext context, AsyncSnapshot snapshot) {
+                final List<String> categories = snapshot.data;
+                return ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  padding: const EdgeInsets.only(top: 20),
+                  itemCount: categories.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return Text(
+                      categories[index],
+                      style: TextStyle(color: Colors.black),
+                    );
+                  },
+                );
+              },
             ),
-            padding: const EdgeInsets.only(top: 20),
-            itemCount: products.length,
-            itemBuilder: (BuildContext context, int index) {
-              return ProductWidget(product: products[index]);
-            },
-          );
-        },
+          ),
+          Expanded(
+            child: StreamBuilder<List<Product>>(
+              stream: productsViewModel.productsStream,
+              initialData: const [],
+              builder: (BuildContext context, AsyncSnapshot snapshot) {
+                final List<Product> products = snapshot.data;
+                return GridView.builder(
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    mainAxisSpacing: 20,
+                  ),
+                  padding: const EdgeInsets.only(top: 20),
+                  itemCount: products.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return ProductWidget(product: products[index]);
+                  },
+                );
+              },
+            ),
+          ),
+        ],
       ),
     );
   }

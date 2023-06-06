@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:http/http.dart' as http;
 
 class CategoryDataSource {
@@ -9,9 +11,10 @@ class CategoryDataSource {
     final http.Response response = await http.get(url);
 
     if (response.statusCode == 200) {
-      return [];
+      var responsejson = json.decode(response.body).cast<String>().toList();
+      return responsejson;
     } else {
-      return [];
+      return <String>[];
     }
   }
 }

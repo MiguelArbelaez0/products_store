@@ -8,8 +8,7 @@ class CategoryRepositoryImpl extends CategoryRepository {
       : _categoryDataSource = categoryDataSource ?? CategoryDataSource();
 
   @override
-  Future<List<String>> onGetCategories() {
-    // TODO: implement onGetCategories
-    throw UnimplementedError();
+  Future<List<String>> onGetCategories() async {
+    return await _categoryDataSource.onGetCategories();
   }
 }
