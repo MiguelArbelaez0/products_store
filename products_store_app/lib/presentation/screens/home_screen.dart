@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:products_store_app/presentation/screens/widgets/categories.widget.dart';
 import 'package:products_store_app/presentation/screens/widgets/product_widget.dart';
 import 'package:products_store_app/presentation/view_model/products_view_model.dart';
 
@@ -41,9 +42,8 @@ class _HomeScreenState extends State<HomeScreen> {
                   padding: const EdgeInsets.only(top: 20),
                   itemCount: categories.length,
                   itemBuilder: (BuildContext context, int index) {
-                    return Text(
-                      categories[index],
-                      style: TextStyle(color: Colors.black),
+                    return CategoriesWidget(
+                      text: categories[index],
                     );
                   },
                 );
