@@ -8,7 +8,7 @@ class ProductWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      margin: EdgeInsets.only(
+      margin: const EdgeInsets.only(
         left: 20,
         right: 20,
       ),
@@ -29,11 +29,11 @@ class ProductWidget extends StatelessWidget {
             children: [
               Text(
                 "${product.price}",
-                style: TextStyle(
+                style: const TextStyle(
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              IconButton(onPressed: () {}, icon: Icon(Icons.add))
+              IconButton(onPressed: () {}, icon: const Icon(Icons.add))
             ],
           ),
         ],

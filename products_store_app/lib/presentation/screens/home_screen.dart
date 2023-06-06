@@ -24,11 +24,11 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Lista de productos'),
+        title: const Text('Lista de productos'),
       ),
       body: StreamBuilder<List<Product>>(
         stream: productsViewModel.productsStream,
-        initialData: [],
+        initialData: const [],
         builder: (BuildContext context, AsyncSnapshot snapshot) {
           final List<Product> products = snapshot.data;
 
