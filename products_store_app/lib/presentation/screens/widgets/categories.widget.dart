@@ -35,24 +35,28 @@ class CategoriesWidget extends StatelessWidget {
         height: 20,
         decoration: BoxDecoration(
           color: isSelected ? Colors.orange : Colors.white,
-          // border: Border.all(color: Colors.black),
           borderRadius: BorderRadius.circular(20),
         ),
         child: Container(
-          margin: const EdgeInsets.only(
-            left: 30,
-          ),
+          margin: const EdgeInsets.only(left: 30),
           child: Row(
             children: [
-              Image.asset(
-                getImage(text),
-                width: 30,
-                height: 30,
+              CircleAvatar(
+                backgroundColor:
+                    isSelected ? Colors.white : Colors.grey.shade200,
+                radius: 20,
+                child: Image.asset(
+                  getImage(text),
+                  width: 30,
+                  height: 30,
+                ),
               ),
+              const SizedBox(width: 10),
               Text(
                 text,
-                style:
-                    TextStyle(color: isSelected ? Colors.white : Colors.grey),
+                style: TextStyle(
+                  color: isSelected ? Colors.white : Colors.grey,
+                ),
               ),
             ],
           ),
