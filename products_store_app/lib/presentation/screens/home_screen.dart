@@ -19,6 +19,11 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     productsViewModel.invokeProducts();
     productsViewModel.invokeCategories();
+
+    // productsViewModel.indexStream.listen((index) {
+    //   indexSelected = index;
+    // });
+
     super.initState();
   }
 
@@ -26,12 +31,16 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        centerTitle: true,
         title: const Text('Lista de productos'),
       ),
       body: Column(
         children: [
+          const SizedBox(
+            height: 50,
+          ),
           SizedBox(
-            height: 200,
+            height: 70,
             child: StreamBuilder<List<String>>(
               stream: productsViewModel.categoryStrem,
               initialData: const [],
@@ -42,13 +51,25 @@ class _HomeScreenState extends State<HomeScreen> {
                   padding: const EdgeInsets.only(top: 20),
                   itemCount: categories.length,
                   itemBuilder: (BuildContext context, int index) {
-                    return CategoriesWidget(
-                      text: categories[index],
+                    return StreamBuilder<int>(
+                      stream: productsViewModel.indexStream,
+                      builder: (context, snapshot) {
+                        return CategoriesWidget(
+                          text: categories[index],
+                          isSelected: snapshot.data == index,
+                          action: () {
+                            productsViewModel.selectIndex(index);
+                          },
+                        );
+                      },
                     );
                   },
                 );
               },
             ),
+          ),
+          const SizedBox(
+            height: 50,
           ),
           Expanded(
             child: StreamBuilder<List<Product>>(

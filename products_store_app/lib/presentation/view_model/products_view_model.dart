@@ -26,7 +26,12 @@ class ProductsViewModel {
   final StreamController<List<String>> _categoriesController =
       StreamController<List<String>>.broadcast()..add([]);
 
+  final StreamController<int> _indexController =
+      StreamController<int>.broadcast()..add(0);
+
   Stream<List<String>> get categoryStrem => _categoriesController.stream;
+
+  Stream<int> get indexStream => _indexController.stream;
 
   invokeProducts() async {
     products = await _getProductsUseCase.invokeGetProducts();
@@ -36,5 +41,9 @@ class ProductsViewModel {
   invokeCategories() async {
     List<String> categories = await _categoriesUseCase.invokeGetCategories();
     _categoriesController.add(categories);
+  }
+
+  selectIndex(int index) {
+    _indexController.add(index);
   }
 }
