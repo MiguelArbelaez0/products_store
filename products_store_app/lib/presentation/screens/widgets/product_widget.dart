@@ -11,6 +11,7 @@ class ProductWidget extends StatelessWidget {
       height: 400,
       child: Card(
         shape: RoundedRectangleBorder(
+          side: BorderSide.none,
           borderRadius: BorderRadius.circular(10),
         ),
         child: Column(
