@@ -17,8 +17,17 @@ class ProductWidget extends StatelessWidget {
         child: Column(
           children: [
             Expanded(
-              child: Image.network(
-                product.image,
+              child: Container(
+                decoration: BoxDecoration(boxShadow: [
+                  BoxShadow(
+                      color: Colors.black.withOpacity(0.1),
+                      spreadRadius: 6,
+                      blurRadius: 5,
+                      offset: Offset(0, 20))
+                ]),
+                child: Image.network(
+                  product.image,
+                ),
               ),
             ),
             const SizedBox(
