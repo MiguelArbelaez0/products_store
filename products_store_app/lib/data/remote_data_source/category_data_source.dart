@@ -12,6 +12,7 @@ class CategoryDataSource {
 
     if (response.statusCode == 200) {
       var responsejson = json.decode(response.body).cast<String>().toList();
+
       return responsejson;
     } else {
       return <String>[];
