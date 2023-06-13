@@ -10,6 +10,6 @@ class GetProductsUseCase {
       : _productsRepository = productsRepository ?? ProductsRepositoryImpl();
 
   Future<List<Product>> invokeGetProducts() async {
-    return _productsRepository.onGetProduct();
+    return await _productsRepository.onGetProduct();
   }
 }

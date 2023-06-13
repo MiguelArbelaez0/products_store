@@ -18,13 +18,16 @@ class ProductWidget extends StatelessWidget {
           children: [
             Expanded(
               child: Container(
-                decoration: BoxDecoration(boxShadow: [
-                  BoxShadow(
+                decoration: BoxDecoration(
+                  boxShadow: [
+                    BoxShadow(
                       color: Colors.black.withOpacity(0.1),
                       spreadRadius: 6,
                       blurRadius: 5,
-                      offset: Offset(0, 20))
-                ]),
+                      offset: Offset(0, 20),
+                    )
+                  ],
+                ),
                 child: Image.network(
                   product.image,
                 ),

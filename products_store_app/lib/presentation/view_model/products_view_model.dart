@@ -3,20 +3,28 @@ import 'dart:async';
 import 'package:products_store_app/domain/entitis/products_entiti.dart';
 import 'package:products_store_app/domain/use_cases/get_category_use_case.dart';
 
+import '../../domain/use_cases/get_product_by_category_use_case.dart';
 import '../../domain/use_cases/get_product_use_case.dart';
 
 class ProductsViewModel {
   List<Product> products = [];
 
+  String _category = "";
+
   final GetProductsUseCase _getProductsUseCase;
 
   final GetCategoriesUseCase _categoriesUseCase;
 
+  GetProductByCategoryUseCase _getProductByCategoryUseCase;
+
   ProductsViewModel(
       {GetProductsUseCase? getProductsUseCase,
-      GetCategoriesUseCase? getCategoriesUseCase})
+      GetCategoriesUseCase? getCategoriesUseCase,
+      GetProductByCategoryUseCase? getProductByCategoryUseCase})
       : _getProductsUseCase = getProductsUseCase ?? GetProductsUseCase(),
-        _categoriesUseCase = getCategoriesUseCase ?? GetCategoriesUseCase();
+        _categoriesUseCase = getCategoriesUseCase ?? GetCategoriesUseCase(),
+        _getProductByCategoryUseCase =
+            getProductByCategoryUseCase ?? GetProductByCategoryUseCase();
 
   final StreamController<List<Product>> _productsController =
       StreamController<List<Product>>.broadcast()..add([]);
@@ -41,6 +49,16 @@ class ProductsViewModel {
   invokeCategories() async {
     List<String> categories = await _categoriesUseCase.invokeGetCategories();
     _categoriesController.add(categories);
+  }
+
+  invokeGetProductsByCategory(String category) async {
+    List<Product> products = await _getProductByCategoryUseCase
+        .invokeGetProductsByCategory(category);
+    _productsController.add(products);
+  }
+
+  setCategory(String category) {
+    _category = category;
   }
 
   selectIndex(int index) {

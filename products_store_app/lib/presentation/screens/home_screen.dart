@@ -57,8 +57,10 @@ class _HomeScreenState extends State<HomeScreen> {
                         return CategoriesWidget(
                           text: categories[index],
                           isSelected: snapshot.data == index,
-                          action: () {
-                            productsViewModel.selectIndex(index);
+                          action: () async {
+                            await productsViewModel.selectIndex(index);
+                            await productsViewModel
+                                .invokeGetProductsByCategory(categories[index]);
                           },
                         );
                       },

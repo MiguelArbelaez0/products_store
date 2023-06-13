@@ -8,6 +8,6 @@ class GetCategoriesUseCase {
       : _categoryRepository = categoryRepository ?? CategoryRepositoryImpl();
 
   Future<List<String>> invokeGetCategories() async {
-    return _categoryRepository.onGetCategories();
+    return await _categoryRepository.onGetCategories();
   }
 }

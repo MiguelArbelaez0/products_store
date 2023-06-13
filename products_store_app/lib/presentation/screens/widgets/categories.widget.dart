@@ -38,8 +38,9 @@ class CategoriesWidget extends StatelessWidget {
           borderRadius: BorderRadius.circular(20),
         ),
         child: Container(
-          margin: const EdgeInsets.only(left: 30),
+          margin: const EdgeInsets.only(left: 30, right: 10),
           child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               CircleAvatar(
                 backgroundColor:
@@ -51,7 +52,7 @@ class CategoriesWidget extends StatelessWidget {
                   height: 30,
                 ),
               ),
-              const SizedBox(width: 10),
+              const SizedBox(width: 30),
               Text(
                 text,
                 style: TextStyle(
