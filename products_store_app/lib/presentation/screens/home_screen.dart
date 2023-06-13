@@ -59,7 +59,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           isSelected: snapshot.data == index,
                           action: () async {
                             await productsViewModel.selectIndex(index);
-                            productsViewModel
+                            await productsViewModel
                                 .invokeGetProductsByCategory(categories[index]);
                           },
                         );
