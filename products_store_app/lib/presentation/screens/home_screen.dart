@@ -27,6 +27,7 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
   }
 
+  bool isLoading = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -46,27 +47,35 @@ class _HomeScreenState extends State<HomeScreen> {
               initialData: const [],
               builder: (BuildContext context, AsyncSnapshot snapshot) {
                 final List<String> categories = snapshot.data;
-                return ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  padding: const EdgeInsets.only(top: 20),
-                  itemCount: categories.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return StreamBuilder<int>(
-                      stream: productsViewModel.indexStream,
-                      builder: (context, snapshot) {
-                        return CategoriesWidget(
-                          text: categories[index],
-                          isSelected: snapshot.data == index,
-                          action: () async {
-                            await productsViewModel.selectIndex(index);
-                            await productsViewModel
-                                .invokeGetProductsByCategory(categories[index]);
-                          },
-                        );
-                      },
-                    );
-                  },
-                );
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return Center(
+                    child: CircularProgressIndicator(),
+                  );
+                } else {
+                  return ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    padding: const EdgeInsets.only(top: 20),
+                    itemCount: categories.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      return StreamBuilder<int>(
+                        stream: productsViewModel.indexStream,
+                        builder: (BuildContext context,
+                            AsyncSnapshot<int> indexSnapshot) {
+                          return CategoriesWidget(
+                            text: categories[index],
+                            isSelected: indexSnapshot.data == index,
+                            action: () async {
+                              await productsViewModel.selectIndex(index);
+                              await productsViewModel
+                                  .invokeGetProductsByCategory(
+                                      categories[index]);
+                            },
+                          );
+                        },
+                      );
+                    },
+                  );
+                }
               },
             ),
           ),
