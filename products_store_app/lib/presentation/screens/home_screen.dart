@@ -48,7 +48,7 @@ class _HomeScreenState extends State<HomeScreen> {
               builder: (BuildContext context, AsyncSnapshot snapshot) {
                 final List<String> categories = snapshot.data;
                 if (snapshot.connectionState == ConnectionState.waiting) {
-                  return Center(
+                  return const Center(
                     child: CircularProgressIndicator(),
                   );
                 } else {
