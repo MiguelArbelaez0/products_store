@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:products_store_app/domain/entitis/products_entiti.dart';
 import 'package:products_store_app/domain/use_cases/get_category_use_case.dart';
+import 'package:products_store_app/presentation/interfaces/home_interface.dart';
 
 import '../../domain/use_cases/get_product_by_category_use_case.dart';
 import '../../domain/use_cases/get_product_use_case.dart';
@@ -15,13 +16,15 @@ class ProductsViewModel {
 
   final GetCategoriesUseCase _categoriesUseCase;
 
+  // final HomeInterface _homeInterface;
+
   GetProductByCategoryUseCase _getProductByCategoryUseCase;
 
-  ProductsViewModel(
-      {GetProductsUseCase? getProductsUseCase,
-      GetCategoriesUseCase? getCategoriesUseCase,
-      GetProductByCategoryUseCase? getProductByCategoryUseCase})
-      : _getProductsUseCase = getProductsUseCase ?? GetProductsUseCase(),
+  ProductsViewModel({
+    GetProductsUseCase? getProductsUseCase,
+    GetCategoriesUseCase? getCategoriesUseCase,
+    GetProductByCategoryUseCase? getProductByCategoryUseCase,
+  })  : _getProductsUseCase = getProductsUseCase ?? GetProductsUseCase(),
         _categoriesUseCase = getCategoriesUseCase ?? GetCategoriesUseCase(),
         _getProductByCategoryUseCase =
             getProductByCategoryUseCase ?? GetProductByCategoryUseCase();

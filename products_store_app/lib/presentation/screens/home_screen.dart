@@ -47,35 +47,28 @@ class _HomeScreenState extends State<HomeScreen> {
               initialData: const [],
               builder: (BuildContext context, AsyncSnapshot snapshot) {
                 final List<String> categories = snapshot.data;
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return const Center(
-                    child: CircularProgressIndicator(),
-                  );
-                } else {
-                  return ListView.builder(
-                    scrollDirection: Axis.horizontal,
-                    padding: const EdgeInsets.only(top: 20),
-                    itemCount: categories.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      return StreamBuilder<int>(
-                        stream: productsViewModel.indexStream,
-                        builder: (BuildContext context,
-                            AsyncSnapshot<int> indexSnapshot) {
-                          return CategoriesWidget(
-                            text: categories[index],
-                            isSelected: indexSnapshot.data == index,
-                            action: () async {
-                              await productsViewModel.selectIndex(index);
-                              await productsViewModel
-                                  .invokeGetProductsByCategory(
-                                      categories[index]);
-                            },
-                          );
-                        },
-                      );
-                    },
-                  );
-                }
+                return ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  padding: const EdgeInsets.only(top: 20),
+                  itemCount: categories.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return StreamBuilder<int>(
+                      stream: productsViewModel.indexStream,
+                      builder: (BuildContext context,
+                          AsyncSnapshot<int> indexSnapshot) {
+                        return CategoriesWidget(
+                          text: categories[index],
+                          isSelected: indexSnapshot.data == index,
+                          action: () async {
+                            await productsViewModel.selectIndex(index);
+                            await productsViewModel
+                                .invokeGetProductsByCategory(categories[index]);
+                          },
+                        );
+                      },
+                    );
+                  },
+                );
               },
             ),
           ),
@@ -88,6 +81,7 @@ class _HomeScreenState extends State<HomeScreen> {
               initialData: const [],
               builder: (BuildContext context, AsyncSnapshot snapshot) {
                 final List<Product> products = snapshot.data;
+
                 return GridView.builder(
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2,

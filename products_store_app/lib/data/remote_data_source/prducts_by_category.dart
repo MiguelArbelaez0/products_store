@@ -6,19 +6,6 @@ import 'package:products_store_app/data/models/product_model.dart';
 class ProductByCategoryDataSource {
   ProductByCategoryDataSource();
 
-  // Future<List<ProductModel>> onGetProductByCategories(String category) async {
-  //   Uri url = Uri.parse('https://fakestoreapi.com/products/category/$category');
-
-  //   final http.Response response = await http.get(url);
-
-  //   if (response.statusCode == 200) {
-  //     var responsejson = json.decode(response.body).cast<String>().toList();
-  //     print(category);
-  //     return responsejson;
-  //   } else {
-  //     return <ProductModel>[];
-  //   }
-
   Future<List<ProductModel>> onGetProductByCategories(String category) async {
     Uri url = Uri.parse('https://fakestoreapi.com/products/category/$category');
 
