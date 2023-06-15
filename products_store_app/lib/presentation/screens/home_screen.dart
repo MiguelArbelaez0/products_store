@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:products_store_app/presentation/interfaces/home_interface.dart';
 import 'package:products_store_app/presentation/screens/widgets/categories.widget.dart';
+
 import 'package:products_store_app/presentation/screens/widgets/product_widget.dart';
 import 'package:products_store_app/presentation/view_model/products_view_model.dart';
 
@@ -12,17 +14,13 @@ class HomeScreen extends StatefulWidget {
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _HomeScreenState extends State<HomeScreen> implements HomeInterface {
   final ProductsViewModel productsViewModel = ProductsViewModel();
 
   @override
   void initState() {
     productsViewModel.invokeProducts();
     productsViewModel.invokeCategories();
-
-    // productsViewModel.indexStream.listen((index) {
-    //   indexSelected = index;
-    // });
 
     super.initState();
   }
@@ -81,7 +79,6 @@ class _HomeScreenState extends State<HomeScreen> {
               initialData: const [],
               builder: (BuildContext context, AsyncSnapshot snapshot) {
                 final List<Product> products = snapshot.data;
-
                 return GridView.builder(
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2,
@@ -99,6 +96,31 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ],
       ),
+    );
+  }
+
+  @override
+  void hideLoading() {}
+  @override
+  void showLoading() {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return Dialog(
+          child: Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                CircularProgressIndicator(),
+                SizedBox(width: 20),
+                Text('Cargando...'),
+              ],
+            ),
+          ),
+        );
+      },
     );
   }
 }
