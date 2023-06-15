@@ -16,9 +16,7 @@ class ProductsViewModel {
 
   final GetCategoriesUseCase _categoriesUseCase;
 
-  // final HomeInterface _homeInterface;
-
-  GetProductByCategoryUseCase _getProductByCategoryUseCase;
+  final GetProductByCategoryUseCase _getProductByCategoryUseCase;
 
   ProductsViewModel({
     GetProductsUseCase? getProductsUseCase,

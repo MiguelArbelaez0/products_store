@@ -15,7 +15,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> implements HomeInterface {
-  final ProductsViewModel productsViewModel = ProductsViewModel();
+  ProductsViewModel productsViewModel = ProductsViewModel();
 
   @override
   void initState() {
@@ -25,7 +25,8 @@ class _HomeScreenState extends State<HomeScreen> implements HomeInterface {
     super.initState();
   }
 
-  bool isLoading = false;
+  bool _isLoading = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -100,26 +101,29 @@ class _HomeScreenState extends State<HomeScreen> implements HomeInterface {
   }
 
   @override
-  void hideLoading() {}
+  void hideLoading() {
+    Navigator.of(context).pop();
+
+    setState(() {});
+  }
+
   @override
   void showLoading() {
+    AlertDialog alert = AlertDialog(
+      content: Row(
+        children: [
+          const CircularProgressIndicator(),
+          Container(
+              margin: const EdgeInsets.only(left: 7),
+              child: const Text("Loading...")),
+        ],
+      ),
+    );
     showDialog(
-      context: context,
       barrierDismissible: false,
+      context: context,
       builder: (BuildContext context) {
-        return Dialog(
-          child: Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                CircularProgressIndicator(),
-                SizedBox(width: 20),
-                Text('Cargando...'),
-              ],
-            ),
-          ),
-        );
+        return alert;
       },
     );
   }
