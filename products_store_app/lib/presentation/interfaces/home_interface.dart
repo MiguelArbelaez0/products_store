@@ -1,4 +1,7 @@
-abstract class HomeInterface {
-  showLoading();
-  hideLoading();
+mixin HomeInterface {
+  showLoadingProducts();
+  hideLoadingProducts();
+
+  showLoadingIndex();
+  hideLoadingIndex();
 }

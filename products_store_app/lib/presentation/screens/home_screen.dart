@@ -14,18 +14,17 @@ class HomeScreen extends StatefulWidget {
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> implements HomeInterface {
-  ProductsViewModel productsViewModel = ProductsViewModel();
+class _HomeScreenState extends State<HomeScreen> with HomeInterface {
+  // ProductsViewModel productsViewModel = ProductsViewModel();
+  late final ProductsViewModel productsViewModel;
 
   @override
   void initState() {
+    super.initState();
+    productsViewModel = ProductsViewModel(this);
     productsViewModel.invokeProducts();
     productsViewModel.invokeCategories();
-
-    super.initState();
   }
-
-  bool _isLoading = false;
 
   @override
   Widget build(BuildContext context) {
@@ -101,26 +100,58 @@ class _HomeScreenState extends State<HomeScreen> implements HomeInterface {
   }
 
   @override
-  void hideLoading() {
+  void hideLoadingProducts() {
     Navigator.of(context).pop();
 
     setState(() {});
   }
 
   @override
-  void showLoading() {
+  void showLoadingProducts() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      AlertDialog alert = AlertDialog(
+        content: Row(
+          children: [
+            const CircularProgressIndicator(),
+            Container(
+              margin: const EdgeInsets.only(left: 7),
+              child: const Text("Loading..."),
+            ),
+            // LoadingWidget()
+          ],
+        ),
+      );
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return alert;
+        },
+      );
+    });
+  }
+
+  @override
+  hideLoadingIndex() {
+    Navigator.of(context).pop();
+
+    setState(() {});
+  }
+
+  @override
+  showLoadingIndex() {
     AlertDialog alert = AlertDialog(
       content: Row(
         children: [
           const CircularProgressIndicator(),
           Container(
-              margin: const EdgeInsets.only(left: 7),
-              child: const Text("Loading...")),
+            margin: const EdgeInsets.only(left: 7),
+            child: const Text("Loading..."),
+          ),
+          // LoadingWidget()
         ],
       ),
     );
     showDialog(
-      barrierDismissible: false,
       context: context,
       builder: (BuildContext context) {
         return alert;

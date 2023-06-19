@@ -18,7 +18,10 @@ class ProductsViewModel {
 
   final GetProductByCategoryUseCase _getProductByCategoryUseCase;
 
-  ProductsViewModel({
+  final HomeInterface _homeInterface;
+
+  ProductsViewModel(
+    this._homeInterface, {
     GetProductsUseCase? getProductsUseCase,
     GetCategoriesUseCase? getCategoriesUseCase,
     GetProductByCategoryUseCase? getProductByCategoryUseCase,
@@ -43,8 +46,13 @@ class ProductsViewModel {
   Stream<int> get indexStream => _indexController.stream;
 
   invokeProducts() async {
+    _homeInterface.showLoadingProducts();
+    await Future.delayed(
+      const Duration(seconds: 1),
+    );
     products = await _getProductsUseCase.invokeGetProducts();
     _productsController.add(products);
+    _homeInterface.hideLoadingProducts();
   }
 
   invokeCategories() async {
@@ -62,7 +70,12 @@ class ProductsViewModel {
     _category = category;
   }
 
-  selectIndex(int index) {
+  selectIndex(int index) async {
+    _homeInterface.showLoadingIndex();
+    await Future.delayed(
+      const Duration(seconds: 1),
+    );
     _indexController.add(index);
+    _homeInterface.hideLoadingIndex();
   }
 }
