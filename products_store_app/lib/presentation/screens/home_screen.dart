@@ -112,12 +112,14 @@ class _HomeScreenState extends State<HomeScreen> with HomeInterface {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       AlertDialog alert = AlertDialog(
         content: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const CircularProgressIndicator(),
+            // const CircularProgressIndicator(),
             Container(
               margin: const EdgeInsets.only(left: 7),
               child: const Text("Loading..."),
             ),
+            const LoadingWidget()
           ],
         ),
       );
@@ -141,13 +143,14 @@ class _HomeScreenState extends State<HomeScreen> with HomeInterface {
   showLoadingIndex() {
     AlertDialog alert = AlertDialog(
       content: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const CircularProgressIndicator(),
+          // const CircularProgressIndicator(),
           Container(
             margin: const EdgeInsets.only(left: 7),
             child: const Text("Loading..."),
           ),
-          // LoadingWidget()
+          const LoadingWidget()
         ],
       ),
     );

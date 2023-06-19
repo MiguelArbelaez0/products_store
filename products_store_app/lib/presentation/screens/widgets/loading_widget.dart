@@ -6,7 +6,9 @@ class LoadingWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
+    return Container(
+      height: 100,
+      width: 100,
       child: Lottie.asset("assets/loading.json"),
     );
   }
