@@ -6,6 +6,7 @@ import 'package:products_store_app/presentation/screens/widgets/product_widget.d
 import 'package:products_store_app/presentation/view_model/products_view_model.dart';
 
 import '../../domain/entitis/products_entiti.dart';
+import 'widgets/loading_widget.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -117,7 +118,6 @@ class _HomeScreenState extends State<HomeScreen> with HomeInterface {
               margin: const EdgeInsets.only(left: 7),
               child: const Text("Loading..."),
             ),
-            // LoadingWidget()
           ],
         ),
       );
