@@ -23,16 +23,33 @@ class _HomeScreenState extends State<HomeScreen> with HomeInterface {
   void initState() {
     super.initState();
     productsViewModel = ProductsViewModel(this);
-    productsViewModel.invokeProducts();
-    productsViewModel.invokeCategories();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      productsViewModel.invokeProducts();
+      productsViewModel.invokeCategories();
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        centerTitle: true,
-        title: const Text('Lista de productos'),
+        elevation: 0,
+        backgroundColor: Colors.white24,
+        actions: [
+          Padding(
+            padding: const EdgeInsets.all(20),
+            child: GestureDetector(
+              onTap: () {
+                Navigator.pushNamed(context, "/cart");
+              },
+              child: const Icon(
+                Icons.shopping_cart,
+                color: Colors.orange,
+                size: 30,
+              ),
+            ),
+          ),
+        ],
       ),
       body: Column(
         children: [
@@ -101,58 +118,18 @@ class _HomeScreenState extends State<HomeScreen> with HomeInterface {
   }
 
   @override
-  void hideLoadingProducts() {
+  void hideLoading() {
     Navigator.of(context).pop();
 
     setState(() {});
   }
 
   @override
-  void showLoadingProducts() {
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      AlertDialog alert = AlertDialog(
-        content: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            // const CircularProgressIndicator(),
-            Container(
-              margin: const EdgeInsets.only(left: 7),
-              child: const Text("Loading..."),
-            ),
-            const LoadingWidget()
-          ],
-        ),
-      );
-      showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return alert;
-        },
-      );
-    });
-  }
-
-  @override
-  hideLoadingIndex() {
-    Navigator.of(context).pop();
-
-    setState(() {});
-  }
-
-  @override
-  showLoadingIndex() {
-    AlertDialog alert = AlertDialog(
-      content: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          // const CircularProgressIndicator(),
-          Container(
-            margin: const EdgeInsets.only(left: 7),
-            child: const Text("Loading..."),
-          ),
-          const LoadingWidget()
-        ],
-      ),
+  void showLoading() {
+    AlertDialog alert = const AlertDialog(
+      elevation: 0,
+      backgroundColor: Colors.transparent,
+      content: LoadingWidget(),
     );
     showDialog(
       context: context,

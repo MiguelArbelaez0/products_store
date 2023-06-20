@@ -46,24 +46,25 @@ class ProductsViewModel {
   Stream<int> get indexStream => _indexController.stream;
 
   invokeProducts() async {
-    _homeInterface.showLoadingProducts();
-    await Future.delayed(
-      const Duration(seconds: 1),
-    );
+    _homeInterface.showLoading();
     products = await _getProductsUseCase.invokeGetProducts();
     _productsController.add(products);
-    _homeInterface.hideLoadingProducts();
+    _homeInterface.hideLoading();
   }
 
   invokeCategories() async {
+    _homeInterface.showLoading();
     List<String> categories = await _categoriesUseCase.invokeGetCategories();
     _categoriesController.add(categories);
+    _homeInterface.hideLoading();
   }
 
   invokeGetProductsByCategory(String category) async {
+    _homeInterface.showLoading();
     List<Product> products = await _getProductByCategoryUseCase
         .invokeGetProductsByCategory(category);
     _productsController.add(products);
+    _homeInterface.hideLoading();
   }
 
   setCategory(String category) {
@@ -71,11 +72,6 @@ class ProductsViewModel {
   }
 
   selectIndex(int index) async {
-    _homeInterface.showLoadingIndex();
-    await Future.delayed(
-      const Duration(seconds: 1),
-    );
     _indexController.add(index);
-    _homeInterface.hideLoadingIndex();
   }
 }

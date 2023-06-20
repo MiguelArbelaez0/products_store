@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:products_store_app/presentation/screens/cart_screen.dart';
 import 'package:products_store_app/presentation/screens/home_screen.dart';
 
 void main() {
@@ -26,7 +27,11 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: const HomeScreen(),
+      initialRoute: "/",
+      routes: {
+        "/cart": (context) => const CartScreen(),
+        "/": (context) => const HomeScreen(),
+      },
     );
   }
 }

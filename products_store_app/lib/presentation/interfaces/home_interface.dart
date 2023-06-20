@@ -1,7 +1,4 @@
 mixin HomeInterface {
-  showLoadingProducts();
-  hideLoadingProducts();
-
-  showLoadingIndex();
-  hideLoadingIndex();
+  showLoading();
+  hideLoading();
 }
