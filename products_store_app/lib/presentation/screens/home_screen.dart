@@ -108,7 +108,12 @@ class _HomeScreenState extends State<HomeScreen> with HomeInterface {
                   itemCount: products.length,
                   itemBuilder: (BuildContext context, int index) {
                     return GestureDetector(
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.pushNamed(
+                          context,
+                          '/detail_screen',
+                        );
+                      },
                       child: ProductWidget(
                         product: products[index],
                         tap: () {
