@@ -3,7 +3,8 @@ import 'package:products_store_app/domain/entitis/products_entiti.dart';
 
 class ProductWidget extends StatelessWidget {
   final Product product;
-  const ProductWidget({super.key, required this.product});
+  final VoidCallback tap;
+  const ProductWidget({super.key, required this.product, required this.tap});
 
   @override
   Widget build(BuildContext context) {
@@ -59,7 +60,7 @@ class ProductWidget extends StatelessWidget {
                     ),
                   ),
                   child: IconButton(
-                    onPressed: () {},
+                    onPressed: () => tap.call(),
                     icon: const Icon(
                       Icons.add,
                       color: Colors.white,

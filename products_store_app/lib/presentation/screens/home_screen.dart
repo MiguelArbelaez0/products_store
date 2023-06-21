@@ -3,6 +3,7 @@ import 'package:products_store_app/presentation/interfaces/home_interface.dart';
 import 'package:products_store_app/presentation/screens/widgets/categories.widget.dart';
 
 import 'package:products_store_app/presentation/screens/widgets/product_widget.dart';
+import 'package:products_store_app/presentation/view_model/cart_view_model.dart';
 import 'package:products_store_app/presentation/view_model/products_view_model.dart';
 
 import '../../domain/entitis/products_entiti.dart';
@@ -106,7 +107,10 @@ class _HomeScreenState extends State<HomeScreen> with HomeInterface {
                   padding: const EdgeInsets.only(top: 20, left: 10, right: 10),
                   itemCount: products.length,
                   itemBuilder: (BuildContext context, int index) {
-                    return ProductWidget(product: products[index]);
+                    return ProductWidget(
+                      product: products[index],
+                      tap: () {},
+                    );
                   },
                 );
               },
