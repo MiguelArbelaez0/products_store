@@ -6,7 +6,7 @@ class CartViewModel {
   List<Product> products = [];
 
   final StreamController<List<Product>> _productsCartController =
-      StreamController<List<Product>>.broadcast()..add([]);
+      StreamController<List<Product>>.broadcast();
 
   Stream<List<Product>> get cartStream => _productsCartController.stream;
 

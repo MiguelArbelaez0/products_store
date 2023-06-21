@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+import '../../domain/entitis/products_entiti.dart';
+import '../view_model/cart_view_model.dart';
+
 class CartScreen extends StatefulWidget {
   const CartScreen({super.key});
 
@@ -12,8 +15,24 @@ class _CartScreenState extends State<CartScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        centerTitle: true,
-        title: Text("Carrito de compras"),
+        title: const Text('Carrito de compras'),
+      ),
+      body: StreamBuilder<List<Product>>(
+        stream: cartViewModel.cartStream,
+        builder: (BuildContext context, AsyncSnapshot snapshot) {
+          final List<Product> products =
+              snapshot.data ?? cartViewModel.products;
+          return ListView.builder(
+            itemCount: products.length,
+            itemBuilder: (context, index) {
+              return ListTile(
+                leading: Image.network(products[index].image),
+                title: Text(products[index].title),
+                subtitle: Text('\$${products[index].price}'),
+              );
+            },
+          );
+        },
       ),
     );
   }

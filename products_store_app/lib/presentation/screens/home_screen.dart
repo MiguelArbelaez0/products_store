@@ -107,9 +107,14 @@ class _HomeScreenState extends State<HomeScreen> with HomeInterface {
                   padding: const EdgeInsets.only(top: 20, left: 10, right: 10),
                   itemCount: products.length,
                   itemBuilder: (BuildContext context, int index) {
-                    return ProductWidget(
-                      product: products[index],
-                      tap: () {},
+                    return GestureDetector(
+                      onTap: () {},
+                      child: ProductWidget(
+                        product: products[index],
+                        tap: () {
+                          cartViewModel.addToCart(products[index]);
+                        },
+                      ),
                     );
                   },
                 );
