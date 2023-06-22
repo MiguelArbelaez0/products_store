@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:products_store_app/domain/entitis/products_entiti.dart';
 
 class DetailScreen extends StatelessWidget {
+  final Product product;
   const DetailScreen({
     super.key,
+    required this.product,
   });
 
   @override
@@ -12,8 +15,10 @@ class DetailScreen extends StatelessWidget {
         centerTitle: true,
         title: Text("Descripcion "),
       ),
-      body: Column(
-        children: [],
+      body: ListTile(
+        leading: Image.network(product.image),
+        title: Text(product.title),
+        subtitle: Text('\$${product.price}'),
       ),
     );
   }

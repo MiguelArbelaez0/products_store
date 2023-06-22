@@ -112,6 +112,7 @@ class _HomeScreenState extends State<HomeScreen> with HomeInterface {
                         Navigator.pushNamed(
                           context,
                           '/detail_screen',
+                          arguments: products[index],
                         );
                       },
                       child: ProductWidget(
