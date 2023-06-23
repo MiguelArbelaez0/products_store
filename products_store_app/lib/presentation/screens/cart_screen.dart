@@ -11,6 +11,7 @@ class CartScreen extends StatefulWidget {
 }
 
 class _CartScreenState extends State<CartScreen> {
+  final double totalPrice = cartViewModel.totalPrice;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,7 +24,7 @@ class _CartScreenState extends State<CartScreen> {
         builder: (BuildContext context, AsyncSnapshot snapshot) {
           final List<Product> products =
               snapshot.data ?? cartViewModel.products;
-          final double totalPrice = cartViewModel.totalPrice;
+
           return Column(
             children: [
               Expanded(

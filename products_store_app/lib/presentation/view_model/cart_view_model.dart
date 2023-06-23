@@ -16,8 +16,6 @@ class CartViewModel {
 //     _productsCartController.add(products);
 //   }
 
-  int get totalItems => products.length;
-
   double get totalPrice {
     double totalPrice = 0;
     for (var product in products) {
