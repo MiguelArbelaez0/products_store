@@ -4,8 +4,10 @@ class Product {
   double price;
   String description;
   String image;
+  int quantity;
 
   Product({
+    required this.quantity,
     required this.id,
     required this.title,
     required this.price,
