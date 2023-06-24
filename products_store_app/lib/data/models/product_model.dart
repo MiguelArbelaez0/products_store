@@ -11,10 +11,11 @@ class ProductModel extends Product {
       required super.image});
 
   String toJson() => json.encode(toMap());
+
   factory ProductModel.fromMap(Map<String, dynamic> json) {
     final int? quantity = json["quantity"];
     return ProductModel(
-      quantity: quantity ?? 0, // Asignar 0 si el valor es nulo
+      quantity: quantity ?? 0,
       id: json["id"],
       title: json["title"],
       price: double.parse(json["price"].toString()),

@@ -16,8 +16,7 @@ class HomeScreen extends StatefulWidget {
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> with HomeInterface {
-  // ProductsViewModel productsViewModel = ProductsViewModel();
+class _HomeScreenState extends State<HomeScreen> implements HomeInterface {
   late final ProductsViewModel productsViewModel;
 
   @override
@@ -141,15 +140,17 @@ class _HomeScreenState extends State<HomeScreen> with HomeInterface {
 
   @override
   void showLoading() {
-    AlertDialog alert = const AlertDialog(
+    AlertDialog loadingDialog = const AlertDialog(
       elevation: 0,
       backgroundColor: Colors.transparent,
       content: LoadingWidget(),
     );
+
     showDialog(
       context: context,
+      barrierColor: Colors.transparent,
       builder: (BuildContext context) {
-        return alert;
+        return loadingDialog;
       },
     );
   }

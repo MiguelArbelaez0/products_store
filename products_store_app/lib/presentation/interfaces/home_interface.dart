@@ -1,4 +1,4 @@
-mixin HomeInterface {
+abstract class HomeInterface {
   showLoading();
   hideLoading();
 }

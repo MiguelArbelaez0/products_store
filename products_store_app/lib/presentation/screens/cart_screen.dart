@@ -11,7 +11,6 @@ class CartScreen extends StatefulWidget {
 }
 
 class _CartScreenState extends State<CartScreen> {
-  final double totalPrice = cartViewModel.totalPrice;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,7 +23,6 @@ class _CartScreenState extends State<CartScreen> {
         builder: (BuildContext context, AsyncSnapshot snapshot) {
           final List<Product> products =
               snapshot.data ?? cartViewModel.products;
-
           return Column(
             children: [
               Expanded(
@@ -39,14 +37,6 @@ class _CartScreenState extends State<CartScreen> {
                       trailing: Text('Cantidad: ${product.quantity}'),
                     );
                   },
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Text(
-                  'Total: \$${totalPrice.toStringAsFixed(2)}',
-                  style: const TextStyle(
-                      fontSize: 18, fontWeight: FontWeight.bold),
                 ),
               ),
             ],
