@@ -30,11 +30,39 @@ class _CartScreenState extends State<CartScreen> {
                   itemCount: products.length,
                   itemBuilder: (context, index) {
                     final product = products[index];
-                    return ListTile(
-                      leading: Image.network(product.image),
-                      title: Text(product.title),
-                      subtitle: Text('\$${product.price.toStringAsFixed(2)}'),
-                      trailing: Text('Cantidad: ${product.quantity}'),
+                    return Column(
+                      children: [
+                        ListTile(
+                          leading: Image.network(product.image),
+                          title: Text(product.title),
+                          subtitle:
+                              Text('\$${product.price.toStringAsFixed(2)}'),
+                          trailing: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              IconButton(
+                                onPressed: () {
+                                  cartViewModel.incrementQuantity(product);
+                                },
+                                icon: Icon(
+                                  Icons.add_circle_rounded,
+                                  color: Colors.grey[700],
+                                ),
+                              ),
+                              Text(product.quantity.toString()),
+                              IconButton(
+                                onPressed: () {
+                                  cartViewModel.decrementQuantity(product);
+                                },
+                                icon: Icon(
+                                  Icons.remove_circle_rounded,
+                                  color: Colors.grey[700],
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
                     );
                   },
                 ),

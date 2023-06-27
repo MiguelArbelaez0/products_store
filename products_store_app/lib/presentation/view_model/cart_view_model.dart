@@ -20,6 +20,24 @@ class CartViewModel {
 
     _productsCartController.add(List<Product>.from(products));
   }
+
+  void incrementQuantity(Product product) {
+    final int index = products.indexWhere((p) => p.id == product.id);
+    if (index != -1) {
+      products[index].quantity += 1;
+      _productsCartController.add(List<Product>.from(products));
+    }
+  }
+
+  void decrementQuantity(Product product) {
+    final int index = products.indexWhere((p) => p.id == product.id);
+    if (index != -1) {
+      if (products[index].quantity > 0) {
+        products[index].quantity -= 1;
+      }
+      _productsCartController.add(List<Product>.from(products));
+    }
+  }
 }
 
 final CartViewModel cartViewModel = CartViewModel();
