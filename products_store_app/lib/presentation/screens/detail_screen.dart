@@ -19,7 +19,10 @@ class DetailScreen extends StatelessWidget {
       body: Column(
         children: [
           Expanded(
-            child: Image.network(product.image),
+            child: Hero(
+              tag: '${product.id}',
+              child: Image.network(product.image),
+            ),
           ),
           Padding(
             padding: const EdgeInsets.all(8.0),

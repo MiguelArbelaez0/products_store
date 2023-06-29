@@ -114,11 +114,14 @@ class _HomeScreenState extends State<HomeScreen> implements HomeInterface {
                           arguments: products[index],
                         );
                       },
-                      child: ProductWidget(
-                        product: products[index],
-                        tap: () {
-                          cartViewModel.addToCart(products[index]);
-                        },
+                      child: Hero(
+                        tag: '${products[index].id}',
+                        child: ProductWidget(
+                          product: products[index],
+                          tap: () {
+                            cartViewModel.addToCart(products[index]);
+                          },
+                        ),
                       ),
                     );
                   },
