@@ -115,7 +115,7 @@ class _HomeScreenState extends State<HomeScreen> implements HomeInterface {
                         );
                       },
                       child: Hero(
-                        tag: '${products[index].id}',
+                        tag: products[index].id,
                         child: ProductWidget(
                           product: products[index],
                           tap: () {

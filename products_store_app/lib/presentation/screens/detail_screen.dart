@@ -20,7 +20,7 @@ class DetailScreen extends StatelessWidget {
         children: [
           Expanded(
             child: Hero(
-              tag: '${product.id}',
+              tag: product.id,
               child: Image.network(product.image),
             ),
           ),
