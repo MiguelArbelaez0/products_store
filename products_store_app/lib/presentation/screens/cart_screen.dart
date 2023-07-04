@@ -30,41 +30,66 @@ class _CartScreenState extends State<CartScreen> {
                   itemCount: products.length,
                   itemBuilder: (context, index) {
                     final product = products[index];
-                    return Column(
-                      children: [
-                        ListTile(
-                          leading: Image.network(product.image),
-                          title: Text(product.title),
-                          subtitle:
-                              Text('\$${product.price.toStringAsFixed(2)}'),
-                          trailing: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              IconButton(
-                                onPressed: () {
-                                  cartViewModel.incrementQuantity(product);
-                                },
-                                icon: Icon(
-                                  Icons.add_circle_rounded,
-                                  color: Colors.grey[700],
-                                ),
+                    return Padding(
+                      padding: const EdgeInsets.all(10),
+                      child: Column(
+                        children: [
+                          Card(
+                            child: ListTile(
+                              leading: Image.network(product.image),
+                              title: Text(product.title),
+                              subtitle:
+                                  Text('\$${product.price.toStringAsFixed(2)}'),
+                              trailing: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  IconButton(
+                                    onPressed: () {
+                                      cartViewModel.incrementQuantity(product);
+                                    },
+                                    icon: Icon(
+                                      Icons.add_circle_rounded,
+                                      color: Colors.grey[700],
+                                    ),
+                                  ),
+                                  Text(product.quantity.toString()),
+                                  IconButton(
+                                    onPressed: () {
+                                      cartViewModel.decrementQuantity(product);
+                                    },
+                                    icon: Icon(
+                                      Icons.remove_circle_rounded,
+                                      color: Colors.grey[700],
+                                    ),
+                                  ),
+                                ],
                               ),
-                              Text(product.quantity.toString()),
-                              IconButton(
-                                onPressed: () {
-                                  cartViewModel.decrementQuantity(product);
-                                },
-                                icon: Icon(
-                                  Icons.remove_circle_rounded,
-                                  color: Colors.grey[700],
-                                ),
-                              ),
-                            ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    );
+                  },
+                ),
+              ),
+              Center(
+                child: Card(
+                  elevation: 2,
+                  child: ListTile(
+                    title: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: const [
+                        Text(
+                          'Total: ',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
+                            color: Colors.black,
                           ),
                         ),
                       ],
-                    );
-                  },
+                    ),
+                  ),
                 ),
               ),
             ],
