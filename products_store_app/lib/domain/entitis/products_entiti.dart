@@ -14,4 +14,6 @@ class Product {
     required this.description,
     required this.image,
   });
+
+  double get subTotal => price * quantity;
 }

@@ -32,8 +32,9 @@ class CartViewModel {
   void decrementQuantity(Product product) {
     final int index = products.indexWhere((p) => p.id == product.id);
     if (index != -1) {
-      if (products[index].quantity > 0) {
-        products[index].quantity -= 1;
+      products[index].quantity -= 1;
+      if (products[index].quantity == 0) {
+        products.removeAt(index);
       }
       _productsCartController.add(List<Product>.from(products));
     }
