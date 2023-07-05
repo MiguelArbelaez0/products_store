@@ -86,29 +86,14 @@ class _CartScreenState extends State<CartScreen> {
                   child: ListTile(
                     title: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        const Text(
+                      children: const [
+                        Text(
                           'Total: ',
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 16,
                             color: Colors.black,
                           ),
-                        ),
-                        StreamBuilder<double>(
-                          stream: cartViewModel.totalPriceStream,
-                          builder: (BuildContext context,
-                              AsyncSnapshot<double> totalPriceSnapshot) {
-                            final totalPrice = totalPriceSnapshot.data ??
-                                cartViewModel.totalPrice;
-                            return Text(
-                              '\$ ${totalPrice.toStringAsFixed(2)}',
-                              style: const TextStyle(
-                                fontSize: 16,
-                                color: Colors.black,
-                              ),
-                            );
-                          },
                         ),
                       ],
                     ),
