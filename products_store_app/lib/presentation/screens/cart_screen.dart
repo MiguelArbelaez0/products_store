@@ -87,6 +87,13 @@ class _CartScreenState extends State<CartScreen> {
                             color: Colors.black,
                           ),
                         ),
+                        Text(
+                          '\$ ${0.0}',
+                          style: TextStyle(
+                            fontSize: 16,
+                            color: Colors.black,
+                          ),
+                        ),
                       ],
                     ),
                   ),
