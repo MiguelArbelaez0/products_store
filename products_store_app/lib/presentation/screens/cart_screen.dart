@@ -95,22 +95,12 @@ class _CartScreenState extends State<CartScreen> {
                             color: Colors.black,
                           ),
                         ),
-                        StreamBuilder<double>(
-                          stream: cartViewModel.totalItemsStream,
-                          builder: (context, snapshot) {
-                            if (snapshot.hasData) {
-                              double totalItems = snapshot.data ?? 0;
-                              return Padding(
-                                padding: EdgeInsets.all(16.0),
-                                child: Text(
-                                  'Total: \$${totalItems.toStringAsFixed(2)}',
-                                  style: TextStyle(fontSize: 18),
-                                ),
-                              );
-                            } else {
-                              return Container();
-                            }
-                          },
+                        Text(
+                          '\$ ${""}',
+                          style: const TextStyle(
+                            fontSize: 16,
+                            color: Colors.black,
+                          ),
                         ),
                       ],
                     ),
