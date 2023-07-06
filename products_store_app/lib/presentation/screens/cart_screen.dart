@@ -80,26 +80,6 @@ class _CartScreenState extends State<CartScreen> {
                   },
                 ),
               ),
-              // Center(
-              //   child: Card(
-              //     elevation: 2,
-              //     child: ListTile(
-              //       title: Row(
-              //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              //         children: const [
-              //           Text(
-              //             'Total: ',
-              //             style: TextStyle(
-              //               fontWeight: FontWeight.bold,
-              //               fontSize: 16,
-              //               color: Colors.black,
-              //             ),
-              //           ),
-              //         ],
-              //       ),
-              //     ),
-              //   ),
-              // ),
               Center(
                 child: Card(
                   elevation: 2,
@@ -115,19 +95,12 @@ class _CartScreenState extends State<CartScreen> {
                             color: Colors.black,
                           ),
                         ),
-                        StreamBuilder<double>(
-                          stream: cartViewModel.totalPriceStream,
-                          builder: (BuildContext context,
-                              AsyncSnapshot<double> totalPriceSnapshot) {
-                            final totalPrice = totalPriceSnapshot.data ?? 0.0;
-                            return Text(
-                              '\$ ${totalPrice.toStringAsFixed(2)}',
-                              style: const TextStyle(
-                                fontSize: 16,
-                                color: Colors.black,
-                              ),
-                            );
-                          },
+                        Text(
+                          '\$ ${""}',
+                          style: const TextStyle(
+                            fontSize: 16,
+                            color: Colors.black,
+                          ),
                         ),
                       ],
                     ),
