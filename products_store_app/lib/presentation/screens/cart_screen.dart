@@ -18,98 +18,108 @@ class _CartScreenState extends State<CartScreen> {
         centerTitle: true,
         title: const Text('Carrito de compras'),
       ),
-      body: StreamBuilder<List<Product>>(
-        stream: cartViewModel.cartStream,
-        builder: (BuildContext context, AsyncSnapshot snapshot) {
-          final List<Product> products =
-              snapshot.data ?? cartViewModel.products;
-          return Column(
-            children: [
-              Expanded(
-                child: ListView.builder(
-                  itemCount: products.length,
-                  itemBuilder: (context, index) {
-                    final product = products[index];
-                    return Padding(
-                      padding: const EdgeInsets.all(10),
-                      child: Column(
-                        children: [
-                          Card(
-                            child: ListTile(
-                              leading: Image.network(product.image),
-                              title: Text(product.title),
-                              subtitle:
-                                  Text('\$${product.price.toStringAsFixed(2)}'),
-                              trailing: Row(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  IconButton(
-                                    onPressed: () {
-                                      cartViewModel.incrementQuantity(product);
-                                    },
-                                    icon: Icon(
-                                      Icons.add_circle_rounded,
-                                      color: Colors.grey[700],
+      body: Column(
+        children: [
+          Expanded(
+            child: StreamBuilder<List<Product>>(
+              stream: cartViewModel.cartStream,
+              builder: (BuildContext context, AsyncSnapshot snapshot) {
+                final List<Product> products =
+                    snapshot.data ?? cartViewModel.products;
+                return Column(
+                  children: [
+                    Expanded(
+                      child: ListView.builder(
+                        itemCount: products.length,
+                        itemBuilder: (context, index) {
+                          final product = products[index];
+                          return Padding(
+                            padding: const EdgeInsets.all(10),
+                            child: Column(
+                              children: [
+                                Card(
+                                  child: ListTile(
+                                    leading: Image.network(product.image),
+                                    title: Text(product.title),
+                                    subtitle: Text(
+                                        '\$${product.price.toStringAsFixed(2)}'),
+                                    trailing: Row(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        IconButton(
+                                          onPressed: () {
+                                            cartViewModel
+                                                .incrementQuantity(product);
+                                          },
+                                          icon: Icon(
+                                            Icons.add_circle_rounded,
+                                            color: Colors.grey[700],
+                                          ),
+                                        ),
+                                        Text(product.quantity.toString()),
+                                        IconButton(
+                                          onPressed: () {
+                                            cartViewModel
+                                                .decrementQuantity(product);
+                                          },
+                                          icon: Icon(
+                                            Icons.remove_circle_rounded,
+                                            color: Colors.grey[700],
+                                          ),
+                                        ),
+                                      ],
                                     ),
                                   ),
-                                  Text(product.quantity.toString()),
-                                  IconButton(
-                                    onPressed: () {
-                                      cartViewModel.decrementQuantity(product);
-                                    },
-                                    icon: Icon(
-                                      Icons.remove_circle_rounded,
-                                      color: Colors.grey[700],
-                                    ),
+                                ),
+                                const SizedBox(height: 8),
+                                Text(
+                                  'Subtotal: \$${product.subTotal.toStringAsFixed(2)}',
+                                  style: const TextStyle(
+                                    fontSize: 14,
+                                    color: Colors.black,
                                   ),
-                                ],
-                              ),
+                                ),
+                              ],
                             ),
-                          ),
-                          const SizedBox(height: 8),
-                          Text(
-                            'Subtotal: \$${product.subTotal.toStringAsFixed(2)}',
-                            style: const TextStyle(
-                              fontSize: 14,
-                              color: Colors.black,
-                            ),
-                          ),
-                        ],
+                          );
+                        },
+                      ),
+                    ),
+                  ],
+                );
+              },
+            ),
+          ),
+          Card(
+            elevation: 2,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const Text(
+                  'Total: ',
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16,
+                    color: Colors.black,
+                  ),
+                ),
+                StreamBuilder<double>(
+                  stream: cartViewModel.totalsTream,
+                  builder: (context, snapshot) {
+                    final double total = snapshot.data ?? 0.0;
+                    return Text(
+                      '\$ ' "$total",
+                      style: const TextStyle(
+                        fontSize: 16,
+                        color: Colors.black,
                       ),
                     );
                   },
                 ),
-              ),
-              Center(
-                child: Card(
-                  elevation: 2,
-                  child: ListTile(
-                    title: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'Total: ',
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 16,
-                            color: Colors.black,
-                          ),
-                        ),
-                        Text(
-                          '\$ ${""}',
-                          style: const TextStyle(
-                            fontSize: 16,
-                            color: Colors.black,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          );
-        },
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }

@@ -8,16 +8,22 @@ class CartViewModel {
   final StreamController<List<Product>> _productsCartController =
       StreamController<List<Product>>.broadcast();
 
+  final StreamController<double> _totalController =
+      StreamController<double>.broadcast();
+
   Stream<List<Product>> get cartStream => _productsCartController.stream;
+
+  Stream<double> get totalsTream => _totalController.stream;
 
   void addToCart(Product product) {
     final int index = products.indexWhere((p) => p.id == product.id);
     if (index != -1) {
       products[index].quantity += 1;
     } else {
+      product.quantity = 1;
       products.add(product);
     }
-
+    _totalItem();
     _productsCartController.add(List<Product>.from(products));
   }
 
@@ -26,6 +32,7 @@ class CartViewModel {
     if (index != -1) {
       products[index].quantity += 1;
       _productsCartController.add(List<Product>.from(products));
+      _totalItem();
     }
   }
 
@@ -37,7 +44,16 @@ class CartViewModel {
         products.removeAt(index);
       }
       _productsCartController.add(List<Product>.from(products));
+      _totalItem();
     }
+  }
+
+  void _totalItem() {
+    double total = 0;
+    for (Product product in products) {
+      total += product.subTotal;
+    }
+    _totalController.add(total);
   }
 }
 
