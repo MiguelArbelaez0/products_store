@@ -40,99 +40,88 @@ class _CartScreenState extends State<CartScreen> {
               builder: (BuildContext context, AsyncSnapshot snapshot) {
                 final List<Product> products =
                     snapshot.data ?? cartViewModel.products;
-                return Column(
-                  children: [
-                    Expanded(
-                      child: Container(
-                        color: Colors.grey.shade900,
-                        child: ListView.builder(
-                          itemCount: products.length,
-                          itemBuilder: (context, index) {
-                            final product = products[index];
-                            return Padding(
-                              padding: const EdgeInsets.all(10),
-                              child: Column(
+                return ListView.builder(
+                  itemCount: products.length,
+                  itemBuilder: (context, index) {
+                    final product = products[index];
+                    return Padding(
+                      padding: const EdgeInsets.all(10),
+                      child: Column(
+                        children: [
+                          Card(
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Row(
                                 children: [
-                                  Card(
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Row(
-                                        children: [
-                                          Image.network(
-                                            product.image,
-                                            width: 50,
-                                            height: 50,
+                                  Image.network(
+                                    product.image,
+                                    width: 50,
+                                    height: 50,
+                                  ),
+                                  const SizedBox(width: 10),
+                                  Expanded(
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          product.title,
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 16,
                                           ),
-                                          const SizedBox(width: 10),
-                                          Expanded(
-                                            child: Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                Text(
-                                                  product.title,
-                                                  style: TextStyle(
-                                                    fontWeight: FontWeight.bold,
-                                                    fontSize: 16,
-                                                  ),
-                                                ),
-                                                Text(
-                                                  '\$${product.price.toStringAsFixed(2)}',
-                                                  style: TextStyle(
-                                                    color: Colors.grey[700],
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
+                                        ),
+                                        Text(
+                                          '\$${product.price.toStringAsFixed(2)}',
+                                          style: TextStyle(
+                                            color: Colors.grey[700],
                                           ),
-                                          Row(
-                                            mainAxisSize: MainAxisSize.min,
-                                            children: [
-                                              IconButton(
-                                                onPressed: () {
-                                                  cartViewModel
-                                                      .incrementQuantity(
-                                                          product);
-                                                },
-                                                icon: Icon(
-                                                  Icons.add_circle_rounded,
-                                                  color: Colors.grey[700],
-                                                ),
-                                              ),
-                                              Text(product.quantity.toString()),
-                                              IconButton(
-                                                onPressed: () {
-                                                  cartViewModel
-                                                      .decrementQuantity(
-                                                          product);
-                                                },
-                                                icon: Icon(
-                                                  Icons.remove_circle_rounded,
-                                                  color: Colors.grey[700],
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ],
-                                      ),
+                                        ),
+                                      ],
                                     ),
                                   ),
-                                  const SizedBox(height: 8),
-                                  Text(
-                                    'Subtotal: \$${product.subTotal.toStringAsFixed(2)}',
-                                    style: const TextStyle(
-                                      fontSize: 14,
-                                      color: Colors.white,
-                                    ),
+                                  Row(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      IconButton(
+                                        onPressed: () {
+                                          cartViewModel
+                                              .incrementQuantity(product);
+                                        },
+                                        icon: Icon(
+                                          Icons.add_circle_rounded,
+                                          color: Colors.grey[700],
+                                        ),
+                                      ),
+                                      Text(product.quantity.toString()),
+                                      IconButton(
+                                        onPressed: () {
+                                          cartViewModel
+                                              .decrementQuantity(product);
+                                        },
+                                        icon: Icon(
+                                          Icons.remove_circle_rounded,
+                                          color: Colors.grey[700],
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                 ],
                               ),
-                            );
-                          },
-                        ),
+                            ),
+                          ),
+                          const SizedBox(height: 8),
+                          Text(
+                            'Subtotal: \$${product.subTotal.toStringAsFixed(2)}',
+                            style: const TextStyle(
+                              fontSize: 14,
+                              color: Colors.black,
+                            ),
+                          ),
+                        ],
                       ),
-                    ),
-                  ],
+                    );
+                  },
                 );
               },
             ),
@@ -146,7 +135,7 @@ class _CartScreenState extends State<CartScreen> {
               child: Column(
                 children: [
                   const Text(
-                    'Total: ',
+                    'Total : ',
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 16,
@@ -154,7 +143,7 @@ class _CartScreenState extends State<CartScreen> {
                     ),
                   ),
                   StreamBuilder<double>(
-                    stream: cartViewModel.totalsTream,
+                    stream: cartViewModel.totalStream,
                     builder: (context, snapshot) {
                       final double total = snapshot.data ?? 0.0;
                       return Text(

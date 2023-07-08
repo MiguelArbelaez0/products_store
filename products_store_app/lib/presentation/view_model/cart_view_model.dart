@@ -13,7 +13,7 @@ class CartViewModel {
 
   Stream<List<Product>> get cartStream => _productsCartController.stream;
 
-  Stream<double> get totalsTream => _totalController.stream;
+  Stream<double> get totalStream => _totalController.stream;
 
   void addToCart(Product product) {
     final int index = products.indexWhere((p) => p.id == product.id);
@@ -23,8 +23,9 @@ class CartViewModel {
       product.quantity = 1;
       products.add(product);
     }
-    _totalItem();
+
     _productsCartController.add(List<Product>.from(products));
+    _totalItem();
   }
 
   void incrementQuantity(Product product) {
