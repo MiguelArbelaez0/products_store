@@ -34,7 +34,7 @@ class CategoriesWidget extends StatelessWidget {
         margin: const EdgeInsets.only(left: 10),
         height: 20,
         decoration: BoxDecoration(
-          color: isSelected ? Colors.orange : Colors.white,
+          color: isSelected ? Colors.black87 : Colors.white,
           borderRadius: BorderRadius.circular(20),
         ),
         child: Container(

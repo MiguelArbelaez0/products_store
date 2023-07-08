@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../domain/entitis/products_entiti.dart';
 import '../view_model/cart_view_model.dart';
+import 'home_screen.dart';
 
 class CartScreen extends StatefulWidget {
   const CartScreen({super.key});
@@ -15,8 +16,21 @@ class _CartScreenState extends State<CartScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        elevation: 0,
+        backgroundColor: Colors.grey.shade900,
         centerTitle: true,
-        title: const Text('Carrito de compras'),
+        leading: IconButton(
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const HomeScreen()),
+            );
+          },
+          icon: const Icon(
+            Icons.arrow_back,
+            color: Colors.white,
+          ),
+        ),
       ),
       body: Column(
         children: [
@@ -29,60 +43,93 @@ class _CartScreenState extends State<CartScreen> {
                 return Column(
                   children: [
                     Expanded(
-                      child: ListView.builder(
-                        itemCount: products.length,
-                        itemBuilder: (context, index) {
-                          final product = products[index];
-                          return Padding(
-                            padding: const EdgeInsets.all(10),
-                            child: Column(
-                              children: [
-                                Card(
-                                  child: ListTile(
-                                    leading: Image.network(product.image),
-                                    title: Text(product.title),
-                                    subtitle: Text(
-                                        '\$${product.price.toStringAsFixed(2)}'),
-                                    trailing: Row(
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: [
-                                        IconButton(
-                                          onPressed: () {
-                                            cartViewModel
-                                                .incrementQuantity(product);
-                                          },
-                                          icon: Icon(
-                                            Icons.add_circle_rounded,
-                                            color: Colors.grey[700],
+                      child: Container(
+                        color: Colors.grey.shade900,
+                        child: ListView.builder(
+                          itemCount: products.length,
+                          itemBuilder: (context, index) {
+                            final product = products[index];
+                            return Padding(
+                              padding: const EdgeInsets.all(10),
+                              child: Column(
+                                children: [
+                                  Card(
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Row(
+                                        children: [
+                                          Image.network(
+                                            product.image,
+                                            width: 50,
+                                            height: 50,
                                           ),
-                                        ),
-                                        Text(product.quantity.toString()),
-                                        IconButton(
-                                          onPressed: () {
-                                            cartViewModel
-                                                .decrementQuantity(product);
-                                          },
-                                          icon: Icon(
-                                            Icons.remove_circle_rounded,
-                                            color: Colors.grey[700],
+                                          const SizedBox(width: 10),
+                                          Expanded(
+                                            child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Text(
+                                                  product.title,
+                                                  style: TextStyle(
+                                                    fontWeight: FontWeight.bold,
+                                                    fontSize: 16,
+                                                  ),
+                                                ),
+                                                Text(
+                                                  '\$${product.price.toStringAsFixed(2)}',
+                                                  style: TextStyle(
+                                                    color: Colors.grey[700],
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
                                           ),
-                                        ),
-                                      ],
+                                          Row(
+                                            mainAxisSize: MainAxisSize.min,
+                                            children: [
+                                              IconButton(
+                                                onPressed: () {
+                                                  cartViewModel
+                                                      .incrementQuantity(
+                                                          product);
+                                                },
+                                                icon: Icon(
+                                                  Icons.add_circle_rounded,
+                                                  color: Colors.grey[700],
+                                                ),
+                                              ),
+                                              Text(product.quantity.toString()),
+                                              IconButton(
+                                                onPressed: () {
+                                                  cartViewModel
+                                                      .decrementQuantity(
+                                                          product);
+                                                },
+                                                icon: Icon(
+                                                  Icons.remove_circle_rounded,
+                                                  color: Colors.grey[700],
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ],
+                                      ),
                                     ),
                                   ),
-                                ),
-                                const SizedBox(height: 8),
-                                Text(
-                                  'Subtotal: \$${product.subTotal.toStringAsFixed(2)}',
-                                  style: const TextStyle(
-                                    fontSize: 14,
-                                    color: Colors.black,
+                                  const SizedBox(height: 8),
+                                  Text(
+                                    'Subtotal: \$${product.subTotal.toStringAsFixed(2)}',
+                                    style: const TextStyle(
+                                      fontSize: 14,
+                                      color: Colors.white,
+                                    ),
                                   ),
-                                ),
-                              ],
-                            ),
-                          );
-                        },
+                                ],
+                              ),
+                            );
+                          },
+                        ),
                       ),
                     ),
                   ],
@@ -90,33 +137,63 @@ class _CartScreenState extends State<CartScreen> {
               },
             ),
           ),
-          Card(
-            elevation: 2,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                const Text(
-                  'Total: ',
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 16,
-                    color: Colors.black,
+          Container(
+            height: 180,
+            color: Colors.grey.shade900,
+            width: 400,
+            child: Padding(
+              padding: const EdgeInsets.all(20),
+              child: Column(
+                children: [
+                  const Text(
+                    'Total: ',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16,
+                      color: Colors.white,
+                    ),
                   ),
-                ),
-                StreamBuilder<double>(
-                  stream: cartViewModel.totalsTream,
-                  builder: (context, snapshot) {
-                    final double total = snapshot.data ?? 0.0;
-                    return Text(
-                      '\$ ' "$total",
-                      style: const TextStyle(
-                        fontSize: 16,
-                        color: Colors.black,
+                  StreamBuilder<double>(
+                    stream: cartViewModel.totalsTream,
+                    builder: (context, snapshot) {
+                      final double total = snapshot.data ?? 0.0;
+                      return Text(
+                        '\$ $total',
+                        style: const TextStyle(
+                          fontSize: 16,
+                          color: Colors.white,
+                        ),
+                      );
+                    },
+                  ),
+                  const SizedBox(height: 20),
+                  SizedBox(
+                    height: 60,
+                    width: 390,
+                    child: ElevatedButton(
+                      style: ButtonStyle(
+                        backgroundColor: MaterialStateProperty.all<Color>(
+                          Colors.yellow.shade700,
+                        ),
+                        shape:
+                            MaterialStateProperty.all<RoundedRectangleBorder>(
+                          RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(25),
+                          ),
+                        ),
                       ),
-                    );
-                  },
-                ),
-              ],
+                      onPressed: () {},
+                      child: const Text(
+                        'Comprar ahora',
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 18,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ],

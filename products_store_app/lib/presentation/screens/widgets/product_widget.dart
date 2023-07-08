@@ -37,18 +37,25 @@ class ProductWidget extends StatelessWidget {
             const SizedBox(
               height: 20,
             ),
-            Text(
-              product.title,
-              textAlign: TextAlign.start,
-              maxLines: 2,
+            Container(
+              margin: const EdgeInsets.only(left: 10, right: 10),
+              child: Text(
+                product.title,
+                textAlign: TextAlign.start,
+                maxLines: 1,
+              ),
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
-                  "\$${product.price}",
-                  style: const TextStyle(
-                    fontWeight: FontWeight.bold,
+                Container(
+                  margin: const EdgeInsets.only(left: 10, right: 10),
+                  child: Text(
+                    "\$${product.price}",
+                    textAlign: TextAlign.start,
+                    style: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
                 Container(

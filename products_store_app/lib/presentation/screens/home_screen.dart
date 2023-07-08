@@ -44,7 +44,7 @@ class _HomeScreenState extends State<HomeScreen> implements HomeInterface {
               },
               child: const Icon(
                 Icons.shopping_cart,
-                color: Colors.orange,
+                color: Colors.black,
                 size: 30,
               ),
             ),
