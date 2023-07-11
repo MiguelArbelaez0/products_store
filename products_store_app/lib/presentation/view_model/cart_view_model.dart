@@ -25,7 +25,7 @@ class CartViewModel {
     }
 
     _productsCartController.add(List<Product>.from(products));
-    _totalItem();
+    _calculateTotal();
   }
 
   void incrementQuantity(Product product) {
@@ -33,7 +33,7 @@ class CartViewModel {
     if (index != -1) {
       products[index].quantity += 1;
       _productsCartController.add(List<Product>.from(products));
-      _totalItem();
+      _calculateTotal();
     }
   }
 
@@ -45,11 +45,11 @@ class CartViewModel {
         products.removeAt(index);
       }
       _productsCartController.add(List<Product>.from(products));
-      _totalItem();
+      _calculateTotal();
     }
   }
 
-  void _totalItem() {
+  void _calculateTotal() {
     double total = 0;
     for (Product product in products) {
       total += product.subTotal;
