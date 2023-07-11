@@ -134,26 +134,31 @@ class _CartScreenState extends State<CartScreen> {
               padding: const EdgeInsets.all(20),
               child: Column(
                 children: [
-                  const Text(
-                    'Total : ',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 16,
-                      color: Colors.white,
-                    ),
-                  ),
-                  StreamBuilder<double>(
-                    stream: cartViewModel.totalStream,
-                    builder: (context, AsyncSnapshot snapshot) {
-                      final double total = snapshot.data ?? 0.0;
-                      return Text(
-                        '\$ $total',
-                        style: const TextStyle(
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Text(
+                        'Total : ',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
                           fontSize: 16,
                           color: Colors.white,
                         ),
-                      );
-                    },
+                      ),
+                      StreamBuilder<double>(
+                        stream: cartViewModel.totalStream,
+                        builder: (context, AsyncSnapshot snapshot) {
+                          final double total = snapshot.data ?? 0.0;
+                          return Text(
+                            '\$ $total',
+                            style: const TextStyle(
+                              fontSize: 16,
+                              color: Colors.white,
+                            ),
+                          );
+                        },
+                      ),
+                    ],
                   ),
                   const SizedBox(height: 20),
                   SizedBox(
