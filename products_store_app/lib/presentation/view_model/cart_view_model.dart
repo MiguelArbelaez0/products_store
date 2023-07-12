@@ -5,6 +5,8 @@ import '../../domain/entitis/products_entiti.dart';
 class CartViewModel {
   List<Product> products = [];
 
+  double total = 0;
+
   final StreamController<List<Product>> _productsCartController =
       StreamController<List<Product>>.broadcast();
 
@@ -50,7 +52,6 @@ class CartViewModel {
   }
 
   void _calculateTotal() {
-    double total = 0;
     for (Product product in products) {
       total += product.subTotal;
     }

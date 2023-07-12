@@ -148,7 +148,8 @@ class _CartScreenState extends State<CartScreen> {
                       StreamBuilder<double>(
                         stream: cartViewModel.totalStream,
                         builder: (context, AsyncSnapshot snapshot) {
-                          final double total = snapshot.data ?? 0.0;
+                          final double total =
+                              snapshot.data ?? cartViewModel.total;
                           return Text(
                             '\$ $total',
                             style: const TextStyle(
