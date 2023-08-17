@@ -23,7 +23,7 @@ class _CartScreenState extends State<CartScreen> {
           onPressed: () {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => const HomeScreen()),
+              MaterialPageRoute(builder: (context) => HomeScreen()),
             );
           },
           icon: const Icon(

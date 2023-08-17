@@ -2,9 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:products_store_app/domain/entitis/products_entiti.dart';
 
 class ProductWidget extends StatelessWidget {
+  final Key keywidget;
   final Product product;
   final VoidCallback tap;
-  const ProductWidget({super.key, required this.product, required this.tap});
+  const ProductWidget({
+    super.key,
+    required this.product,
+    required this.tap,
+    required this.keywidget,
+  });
 
   @override
   Widget build(BuildContext context) {

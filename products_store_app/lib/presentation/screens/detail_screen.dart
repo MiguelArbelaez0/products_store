@@ -28,7 +28,7 @@ class _DetailScreenState extends State<DetailScreen> {
           onPressed: () {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => const HomeScreen()),
+              MaterialPageRoute(builder: (context) => HomeScreen()),
             );
           },
           icon: const Icon(

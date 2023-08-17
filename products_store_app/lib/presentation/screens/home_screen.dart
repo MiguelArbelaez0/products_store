@@ -10,7 +10,9 @@ import '../../domain/entitis/products_entiti.dart';
 import 'widgets/loading_widget.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+  final CartViewModel _cartViewModel;
+  HomeScreen({super.key, CartViewModel? cartViewModelTest})
+      : _cartViewModel = cartViewModelTest ?? cartViewModel;
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -117,6 +119,7 @@ class _HomeScreenState extends State<HomeScreen> implements HomeInterface {
                       child: Hero(
                         tag: products[index].id,
                         child: ProductWidget(
+                          keywidget: const Key("product-widget"),
                           product: products[index],
                           tap: () {
                             cartViewModel.addToCart(products[index]);
