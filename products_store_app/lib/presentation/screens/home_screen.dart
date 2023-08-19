@@ -119,11 +119,17 @@ class _HomeScreenState extends State<HomeScreen> implements HomeInterface {
                       child: Hero(
                         tag: products[index].id,
                         child: ProductWidget(
-                          keywidget: const Key("product-widget"),
                           product: products[index],
-                          tap: () {
-                            cartViewModel.addToCart(products[index]);
-                          },
+                          iconButton: IconButton(
+                            key: const Key("product-widget"),
+                            onPressed: () {
+                              cartViewModel.addToCart(products[index]);
+                            },
+                            icon: const Icon(
+                              Icons.add,
+                              color: Colors.white,
+                            ),
+                          ),
                         ),
                       ),
                     );
