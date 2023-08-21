@@ -6,7 +6,7 @@ import 'package:products_store_app/presentation/view_model/cart_view_model.dart'
 void main() {
   testWidgets('Test de botón "add" en ProductWidget',
       (WidgetTester tester) async {
-    final CartViewModel cartViewModel = CartViewModel();
+    // final CartViewModel cartViewModel = CartViewModel();
     await tester.pumpWidget(
       MaterialApp(home: HomeScreen()),
     );
