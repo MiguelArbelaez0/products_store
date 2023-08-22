@@ -10,9 +10,9 @@ import '../../domain/entitis/products_entiti.dart';
 import 'widgets/loading_widget.dart';
 
 class HomeScreen extends StatefulWidget {
-  final CartViewModel _cartViewModel;
-  HomeScreen({super.key, CartViewModel? cartViewModelTest})
-      : _cartViewModel = cartViewModelTest ?? cartViewModel;
+  final ArgsProductVieModel _argsProductVieModel;
+  HomeScreen({super.key, ArgsProductVieModel? argsViewModelTest})
+      : _argsProductVieModel = argsViewModelTest ?? ArgsProductVieModel();
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -24,7 +24,7 @@ class _HomeScreenState extends State<HomeScreen> implements HomeInterface {
   @override
   void initState() {
     super.initState();
-    productsViewModel = ProductsViewModel(this);
+    productsViewModel = ProductsViewModel(this, widget._argsProductVieModel);
     WidgetsBinding.instance.addPostFrameCallback((_) {
       productsViewModel.invokeProducts();
       productsViewModel.invokeCategories();

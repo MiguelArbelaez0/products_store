@@ -7,28 +7,32 @@ import 'package:products_store_app/presentation/interfaces/home_interface.dart';
 import '../../domain/use_cases/get_product_by_category_use_case.dart';
 import '../../domain/use_cases/get_product_use_case.dart';
 
+class ArgsProductVieModel {
+  final GetProductsUseCase _getProductsUseCase;
+  final GetCategoriesUseCase _getCategoriesUseCase;
+  final GetProductByCategoryUseCase _getProductByCategoryUseCase;
+  ArgsProductVieModel(
+      {GetCategoriesUseCase? getCategoriesUseCaseTest,
+      GetProductsUseCase? getProductsUseCaseTest,
+      GetProductByCategoryUseCase? getProductByCategoryUseCaseTest,
+      GetCategoriesUseCase? getCategoriesUseCase})
+      : _getCategoriesUseCase =
+            getCategoriesUseCaseTest ?? GetCategoriesUseCase(),
+        _getProductsUseCase = getProductsUseCaseTest ?? GetProductsUseCase(),
+        _getProductByCategoryUseCase =
+            getProductByCategoryUseCaseTest = GetProductByCategoryUseCase();
+}
+
 class ProductsViewModel {
   List<Product> products = [];
 
   String _category = "";
 
-  final GetProductsUseCase _getProductsUseCase;
-
-  final GetCategoriesUseCase _categoriesUseCase;
-
-  final GetProductByCategoryUseCase _getProductByCategoryUseCase;
+  final ArgsProductVieModel _argsProductVieModel;
 
   final HomeInterface _homeInterface;
 
-  ProductsViewModel(
-    this._homeInterface, {
-    GetProductsUseCase? getProductsUseCase,
-    GetCategoriesUseCase? getCategoriesUseCase,
-    GetProductByCategoryUseCase? getProductByCategoryUseCase,
-  })  : _getProductsUseCase = getProductsUseCase ?? GetProductsUseCase(),
-        _categoriesUseCase = getCategoriesUseCase ?? GetCategoriesUseCase(),
-        _getProductByCategoryUseCase =
-            getProductByCategoryUseCase ?? GetProductByCategoryUseCase();
+  ProductsViewModel(this._homeInterface, this._argsProductVieModel);
 
   final StreamController<List<Product>> _productsController =
       StreamController<List<Product>>.broadcast()..add([]);
@@ -47,21 +51,24 @@ class ProductsViewModel {
 
   invokeProducts() async {
     _homeInterface.showLoading();
-    products = await _getProductsUseCase.invokeGetProducts();
+    products =
+        await _argsProductVieModel._getProductsUseCase.invokeGetProducts();
     _productsController.add(products);
     _homeInterface.hideLoading();
   }
 
   invokeCategories() async {
     _homeInterface.showLoading();
-    List<String> categories = await _categoriesUseCase.invokeGetCategories();
+    List<String> categories =
+        await _argsProductVieModel._getCategoriesUseCase.invokeGetCategories();
     _categoriesController.add(categories);
     _homeInterface.hideLoading();
   }
 
   invokeGetProductsByCategory(String category) async {
     _homeInterface.showLoading();
-    List<Product> products = await _getProductByCategoryUseCase
+    List<Product> products = await _argsProductVieModel
+        ._getProductByCategoryUseCase
         .invokeGetProductsByCategory(category);
     _productsController.add(products);
     _homeInterface.hideLoading();

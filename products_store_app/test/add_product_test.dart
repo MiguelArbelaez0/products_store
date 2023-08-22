@@ -1,46 +1,58 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:mocktail/mocktail.dart';
+import 'package:products_store_app/domain/entitis/products_entiti.dart';
+
+import 'package:products_store_app/domain/use_cases/get_category_use_case.dart';
+import 'package:products_store_app/domain/use_cases/get_product_by_category_use_case.dart';
+import 'package:products_store_app/domain/use_cases/get_product_use_case.dart';
 import 'package:products_store_app/presentation/screens/home_screen.dart';
-import 'package:products_store_app/presentation/screens/widgets/product_widget.dart';
+import 'package:products_store_app/presentation/view_model/products_view_model.dart';
 
-// void main() {
-//   testWidgets('Test de botón "add" en ProductWidget',
-//       (WidgetTester tester) async {
-//     // final CartViewModel cartViewModel = CartViewModel();
-//     await tester.pumpWidget(
-//       MaterialApp(home: HomeScreen()),
-//     );
+class GetCategoriesUseCaseMock extends Mock implements GetCategoriesUseCase {}
 
-//     await tester.pumpAndSettle();
+class GetProductsUseCaseMock extends Mock implements GetProductsUseCase {}
 
-//     final addButton = find.byIcon(Icons.add);
+class GetProductByCategoryUseCaseMock extends Mock
+    implements GetProductByCategoryUseCase {}
 
-//     expect(addButton, findsOneWidget);
-
-//     await tester.tap(addButton);
-
-//     await tester.pumpAndSettle();
-//   });
-// }
 void main() {
-  testWidgets(
-    'Test button tap in ProductWidget',
-    (WidgetTester tester) async {
-      await tester.pumpWidget(MaterialApp(
-        home: HomeScreen(),
-      ));
+  final GetProductsUseCaseMock _getProductUseCaseMock =
+      GetProductsUseCaseMock();
+  final GetCategoriesUseCaseMock _getCategoriesUseCaseMock =
+      GetCategoriesUseCaseMock();
+  final GetProductByCategoryUseCase _getProductByCategoryMock =
+      GetProductByCategoryUseCaseMock();
 
-      await tester.pump();
+  final ArgsProductVieModel argsProductVieModel = ArgsProductVieModel(
+      getCategoriesUseCaseTest: _getCategoriesUseCaseMock,
+      getProductsUseCaseTest: _getProductUseCaseMock,
+      getProductByCategoryUseCaseTest: _getProductByCategoryMock);
+  testWidgets('Test de botón "add" en ProductWidget',
+      (WidgetTester tester) async {
+    when(() => _getProductUseCaseMock.invokeGetProducts()).thenAnswer(
+        (_) async => <Product>[
+              Product(
+                  quantity: 1,
+                  id: 1,
+                  title: "",
+                  price: 12,
+                  description: "",
+                  image: "")
+            ]);
+    when(() => _getCategoriesUseCaseMock.invokeGetCategories())
+        .thenAnswer((_) async => <String>["electronics"]);
 
-      final productWidgetFinder = find.byType(ProductWidget);
-      final productWidgetInstances = tester.widgetList(productWidgetFinder);
+    await tester.pumpWidget(
+      MaterialApp(home: HomeScreen(argsViewModelTest: argsProductVieModel)),
+    );
 
-      for (var productWidgetInstance in productWidgetInstances) {
-        await tester.tap(find.byWidget(productWidgetInstance));
-        await tester.pump();
+    await tester.pumpAndSettle();
 
-        expect(find.text('Button tapped'), findsOneWidget);
-      }
-    },
-  );
+    final addButton = find.byKey(const Key("product-widget"));
+
+    expect(addButton, findsOneWidget);
+
+    await tester.pumpAndSettle();
+  });
 }
