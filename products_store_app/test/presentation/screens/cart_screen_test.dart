@@ -8,7 +8,7 @@ void main() {
   group("cart screen", () {
     final List<Product> productTest = [
       Product(
-          quantity: 11,
+          quantity: 1,
           id: 2,
           title: "prducto 1",
           price: 10.0,
@@ -27,16 +27,23 @@ void main() {
       expect(product, findsOneWidget);
     });
 
-    testWidgets('Prueba de botón incrementar producto ',
+    testWidgets('Prueba de botón incrementar producto',
         (WidgetTester tester) async {
-      await tester.pumpWidget(const MaterialApp(
-        home: CartScreen(),
-      ));
+      await tester.pumpWidget(
+        const MaterialApp(
+          home: CartScreen(),
+        ),
+      );
+
       await tester.pumpAndSettle();
 
-      final incrementProduct = find.byKey(const Key("increment-product"));
+      final incrementButton = find.byKey(const Key("increment-product"));
+      expect(incrementButton, findsOneWidget);
+      await tester.tap(incrementButton);
+      await tester.pumpAndSettle();
 
-      expect(incrementProduct, findsOneWidget);
+      final updatedQuantity = find.text("2");
+      expect(updatedQuantity, findsOneWidget);
     });
   });
 }
