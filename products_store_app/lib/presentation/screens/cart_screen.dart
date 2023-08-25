@@ -53,11 +53,11 @@ class _CartScreenState extends State<CartScreen> {
                               padding: const EdgeInsets.all(8.0),
                               child: Row(
                                 children: [
-                                  Image.network(
-                                    product.image,
-                                    width: 50,
-                                    height: 50,
-                                  ),
+                                  // Image.network(
+                                  //   product.image,
+                                  //   width: 50,
+                                  //   height: 50,
+                                  // ),
                                   const SizedBox(width: 10),
                                   Expanded(
                                     child: Column(
@@ -84,6 +84,7 @@ class _CartScreenState extends State<CartScreen> {
                                     mainAxisSize: MainAxisSize.min,
                                     children: [
                                       IconButton(
+                                        key: const Key("increment-product"),
                                         onPressed: () {
                                           cartViewModel
                                               .incrementQuantity(product);
