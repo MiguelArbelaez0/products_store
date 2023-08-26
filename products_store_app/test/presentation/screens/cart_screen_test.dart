@@ -46,4 +46,23 @@ void main() {
       expect(updatedQuantity, findsOneWidget);
     });
   });
+
+  testWidgets('Prueba de botón decrementar producto',
+      (WidgetTester tester) async {
+    await tester.pumpWidget(
+      const MaterialApp(
+        home: CartScreen(),
+      ),
+    );
+
+    await tester.pumpAndSettle();
+
+    final decrementButton = find.byKey(const Key("decrement-product"));
+    expect(decrementButton, findsOneWidget);
+    await tester.tap(decrementButton);
+    await tester.pumpAndSettle();
+
+    final updatedQuantity = find.text("1");
+    expect(updatedQuantity, findsOneWidget);
+  });
 }

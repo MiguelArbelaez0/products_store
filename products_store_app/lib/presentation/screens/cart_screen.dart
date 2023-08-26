@@ -96,6 +96,7 @@ class _CartScreenState extends State<CartScreen> {
                                       ),
                                       Text(product.quantity.toString()),
                                       IconButton(
+                                        key: const Key("decrement-product"),
                                         onPressed: () {
                                           cartViewModel
                                               .decrementQuantity(product);
