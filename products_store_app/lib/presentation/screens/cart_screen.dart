@@ -154,6 +154,7 @@ class _CartScreenState extends State<CartScreen> {
                               snapshot.data ?? cartViewModel.total;
                           return Text(
                             '\$ $total',
+                            key: const Key("total-key"),
                             style: const TextStyle(
                               fontSize: 16,
                               color: Colors.white,

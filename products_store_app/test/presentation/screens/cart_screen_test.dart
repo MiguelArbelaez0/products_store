@@ -45,6 +45,20 @@ void main() {
       final updatedQuantity = find.text("2");
       expect(updatedQuantity, findsOneWidget);
     });
+    testWidgets('Prueba del  total  de productos', (WidgetTester tester) async {
+      cartViewModel.addToCart(productTest[0]);
+      await tester.pumpWidget(
+        const MaterialApp(
+          home: CartScreen(),
+        ),
+      );
+
+      await tester.pumpAndSettle();
+
+      final totalPriceKey = find.byKey(const Key("total-key"));
+      expect(totalPriceKey, findsOneWidget);
+      await tester.pumpAndSettle();
+    });
   });
 
   testWidgets('Prueba de botón decrementar producto',
