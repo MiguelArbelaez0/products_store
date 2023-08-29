@@ -62,4 +62,14 @@ void main() {
       verify(() => _homeInterfaceMock.hideLoading());
     });
   });
+  test("invocando categorias", () async {
+    // Arrange
+    final List<String> mockCategories = ['electronics', 'jewelery'];
+    when(() => _getCategoriesUseCaseMock.invokeGetCategories())
+        .thenAnswer((_) async => mockCategories);
+
+    await productsViewModel.invokeCategories();
+
+    expect(await productsViewModel.categoryStrem.first, mockCategories);
+  });
 }
