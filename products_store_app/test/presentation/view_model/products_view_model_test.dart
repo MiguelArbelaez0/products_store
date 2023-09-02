@@ -63,7 +63,6 @@ void main() {
     });
   });
   test("invocando categorias", () async {
-    // Arrange
     final List<String> mockCategories = ['electronics', 'jewelery'];
     when(() => _getCategoriesUseCaseMock.invokeGetCategories())
         .thenAnswer((_) async => mockCategories);
