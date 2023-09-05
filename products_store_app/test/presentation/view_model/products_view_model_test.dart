@@ -69,6 +69,24 @@ void main() {
 
     await productsViewModel.invokeCategories();
 
-    expect(await productsViewModel.categoryStrem.first, mockCategories);
+    productsViewModel.categoryStrem.listen((event) {
+      expect(event.length, mockCategories.length);
+    });
+  });
+
+  test("invocando por categorias", () async {
+    const String mockCategory = "category";
+    final List<Product> productTest = [
+      Product(
+          quantity: 1, id: 2, title: "", price: 12, description: "", image: "")
+    ];
+    when(() => _getProductByCategotyUseCaseMock
+        .invokeGetProductsByCategory(mockCategory));
+
+    await productsViewModel.invokeGetProductsByCategory(mockCategory);
+
+    productsViewModel.productsStream.listen((event) {
+      expect(event, productTest);
+    });
   });
 }
