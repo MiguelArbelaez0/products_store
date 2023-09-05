@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:products_store_app/domain/entitis/products_entiti.dart';
@@ -87,6 +89,25 @@ void main() {
 
     productsViewModel.productsStream.listen((event) {
       expect(event, productTest);
+    });
+  });
+
+  test("actualizar categoria", () {
+    const String mockCategory = "electronics";
+
+    productsViewModel.setCategory(mockCategory);
+
+    productsViewModel.categoryStrem.listen((event) {
+      expect(event, mockCategory);
+    });
+  });
+  test("actualizar index ", () {
+    const int mockIndex = 1;
+
+    productsViewModel.selectIndex(mockIndex);
+
+    productsViewModel.indexStream.listen((event) {
+      expect(event, mockIndex);
     });
   });
 }

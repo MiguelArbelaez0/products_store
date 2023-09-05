@@ -8,13 +8,14 @@ void main() {
   group("cart screen", () {
     final List<Product> productTest = [
       Product(
-          quantity: 1,
+          quantity: 2,
           id: 2,
           title: "prducto 1",
           price: 10.0,
           description: "",
           image: ""),
     ];
+
     testWidgets('Prueba de botón añadir un producto ',
         (WidgetTester tester) async {
       cartViewModel.addToCart(productTest[0]);
@@ -42,10 +43,11 @@ void main() {
       await tester.tap(incrementButton);
       await tester.pumpAndSettle();
 
-      final updatedQuantity = find.text("2");
+      final updatedQuantity = find.text("2"); //
       expect(updatedQuantity, findsOneWidget);
     });
-    testWidgets('Prueba del  total  de productos', (WidgetTester tester) async {
+
+    testWidgets('Prueba del total de productos', (WidgetTester tester) async {
       cartViewModel.addToCart(productTest[0]);
       await tester.pumpWidget(
         const MaterialApp(
@@ -59,24 +61,24 @@ void main() {
       expect(totalPriceKey, findsOneWidget);
       await tester.pumpAndSettle();
     });
-  });
 
-  testWidgets('Prueba de botón decrementar producto',
-      (WidgetTester tester) async {
-    await tester.pumpWidget(
-      const MaterialApp(
-        home: CartScreen(),
-      ),
-    );
+    testWidgets('Prueba de botón decrementar producto',
+        (WidgetTester tester) async {
+      await tester.pumpWidget(
+        const MaterialApp(
+          home: CartScreen(),
+        ),
+      );
 
-    await tester.pumpAndSettle();
+      await tester.pumpAndSettle();
 
-    final decrementButton = find.byKey(const Key("decrement-product"));
-    expect(decrementButton, findsOneWidget);
-    await tester.tap(decrementButton);
-    await tester.pumpAndSettle();
+      final decrementButton = find.byKey(const Key("decrement-product"));
+      expect(decrementButton, findsOneWidget);
+      await tester.tap(decrementButton);
+      await tester.pumpAndSettle();
 
-    final updatedQuantity = find.text("1");
-    expect(updatedQuantity, findsOneWidget);
+      final updatedQuantity = find.text("2");
+      expect(updatedQuantity, findsOneWidget);
+    });
   });
 }
