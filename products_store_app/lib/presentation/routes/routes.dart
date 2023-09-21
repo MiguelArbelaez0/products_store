@@ -9,7 +9,7 @@ class Routes {
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
       case "/":
-        return MaterialPageRoute(builder: (_) => const HomeScreen());
+        return MaterialPageRoute(builder: (_) => HomeScreen());
 
       case "/cart":
         return MaterialPageRoute(builder: (_) => const CartScreen());
@@ -23,6 +23,6 @@ class Routes {
         );
     }
 
-    return MaterialPageRoute(builder: (_) => const HomeScreen());
+    return MaterialPageRoute(builder: (_) => HomeScreen());
   }
 }

@@ -23,7 +23,7 @@ class _CartScreenState extends State<CartScreen> {
           onPressed: () {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => const HomeScreen()),
+              MaterialPageRoute(builder: (context) => HomeScreen()),
             );
           },
           icon: const Icon(
@@ -53,11 +53,11 @@ class _CartScreenState extends State<CartScreen> {
                               padding: const EdgeInsets.all(8.0),
                               child: Row(
                                 children: [
-                                  Image.network(
-                                    product.image,
-                                    width: 50,
-                                    height: 50,
-                                  ),
+                                  // Image.network(
+                                  //   product.image,
+                                  //   width: 50,
+                                  //   height: 50,
+                                  // ),
                                   const SizedBox(width: 10),
                                   Expanded(
                                     child: Column(
@@ -84,6 +84,7 @@ class _CartScreenState extends State<CartScreen> {
                                     mainAxisSize: MainAxisSize.min,
                                     children: [
                                       IconButton(
+                                        key: const Key("increment-product"),
                                         onPressed: () {
                                           cartViewModel
                                               .incrementQuantity(product);
@@ -95,6 +96,7 @@ class _CartScreenState extends State<CartScreen> {
                                       ),
                                       Text(product.quantity.toString()),
                                       IconButton(
+                                        key: const Key("decrement-product"),
                                         onPressed: () {
                                           cartViewModel
                                               .decrementQuantity(product);
@@ -152,6 +154,7 @@ class _CartScreenState extends State<CartScreen> {
                               snapshot.data ?? cartViewModel.total;
                           return Text(
                             '\$ $total',
+                            key: const Key("total-key"),
                             style: const TextStyle(
                               fontSize: 16,
                               color: Colors.white,

@@ -2,9 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:products_store_app/domain/entitis/products_entiti.dart';
 
 class ProductWidget extends StatelessWidget {
+  final IconButton iconButton;
+
   final Product product;
-  final VoidCallback tap;
-  const ProductWidget({super.key, required this.product, required this.tap});
+
+  const ProductWidget({
+    super.key,
+    required this.product,
+    required this.iconButton,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -66,13 +72,7 @@ class ProductWidget extends StatelessWidget {
                       bottomRight: Radius.circular(10),
                     ),
                   ),
-                  child: IconButton(
-                    onPressed: () => tap.call(),
-                    icon: const Icon(
-                      Icons.add,
-                      color: Colors.white,
-                    ),
-                  ),
+                  child: iconButton,
                 )
               ],
             ),
