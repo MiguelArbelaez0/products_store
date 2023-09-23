@@ -19,7 +19,7 @@ class _HomeScreen2State extends State<HomeScreen2> {
   @override
   void initState() {
     super.initState();
-    _productBloc.add();
+    _productBloc.add(LoadInitialProductsEvent());
   }
 
   @override

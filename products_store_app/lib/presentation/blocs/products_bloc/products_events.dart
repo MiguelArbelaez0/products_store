@@ -9,3 +9,5 @@ class GetProductsByCategoryEvent extends ProductsEvent {}
 class SetCategoryEvent extends ProductsEvent {}
 
 class SelectIndex extends ProductsEvent {}
+
+class LoadInitialProductsEvent extends ProductsEvent {}
