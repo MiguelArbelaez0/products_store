@@ -7,11 +7,11 @@ import '../../../domain/use_cases/get_category_use_case.dart';
 import '../../../domain/use_cases/get_product_by_category_use_case.dart';
 import '../../../domain/use_cases/get_product_use_case.dart';
 
-class ArgsProductVieModel {
+class ArgsProductVieModel2 {
   final GetProductsUseCase _getProductsUseCase;
   final GetCategoriesUseCase _getCategoriesUseCase;
   final GetProductByCategoryUseCase _getProductByCategoryUseCase;
-  ArgsProductVieModel(
+  ArgsProductVieModel2(
       {GetCategoriesUseCase? getCategoriesUseCaseTest,
       GetProductsUseCase? getProductsUseCaseTest,
       GetProductByCategoryUseCase? getProductByCategoryUseCaseTest,
@@ -24,7 +24,7 @@ class ArgsProductVieModel {
 }
 
 class ProductBloc extends Bloc<ProductsEvent, ProductsStates> {
-  final ArgsProductVieModel _argsProductVieModel;
+  final ArgsProductVieModel2 _argsProductVieModel;
   ProductBloc(this._argsProductVieModel) : super(initialState) {
     on<GetProductsEvent>((event, emit) => invokeProducts(event, emit));
   }

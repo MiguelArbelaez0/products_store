@@ -3,38 +3,150 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:products_store_app/presentation/blocs/products_bloc/products_bloc.dart';
 import 'package:products_store_app/presentation/blocs/products_bloc/products_events.dart';
 import 'package:products_store_app/presentation/blocs/products_bloc/products_states.dart';
+import 'package:products_store_app/presentation/interfaces/home_interface.dart';
+import 'package:products_store_app/presentation/screens/widgets/categories.widget.dart';
 
-class HomeScreen2 extends StatefulWidget {
-  const HomeScreen2({super.key});
+import 'package:products_store_app/presentation/screens/widgets/product_widget.dart';
+import 'package:products_store_app/presentation/view_model/cart_view_model.dart';
+import 'package:products_store_app/presentation/view_model/products_view_model.dart';
+
+import '../../../domain/entitis/products_entiti.dart';
+import 'loading_widget.dart';
+
+class HomeScreen extends StatefulWidget {
+  final ArgsProductVieModel2 _argsProductVieModel;
+  HomeScreen({super.key, ArgsProductVieModel2? argsViewModelTest})
+      : _argsProductVieModel = argsViewModelTest ?? ArgsProductVieModel2();
 
   @override
-  State<HomeScreen2> createState() => _HomeScreen2State();
+  State<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _HomeScreen2State extends State<HomeScreen2> {
-  late final ArgsProductVieModel _argsProductVieModel;
-
-  late final ProductBloc _productBloc = ProductBloc(_argsProductVieModel);
+class _HomeScreenState extends State<HomeScreen> {
+  late final ProductBloc _productBloc;
 
   @override
   void initState() {
     super.initState();
-    _productBloc.add(LoadInitialProductsEvent());
+    _productBloc = ProductBloc(widget._argsProductVieModel)
+      ..add(GetProductsEvent())
+      ..add(GetCategoriesEvent());
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        elevation: 0,
+        backgroundColor: Colors.white24,
+        actions: [
+          Padding(
+            padding: const EdgeInsets.all(20),
+            child: GestureDetector(
+              onTap: () {
+                Navigator.pushNamed(context, "/cart");
+              },
+              child: const Icon(
+                Icons.shopping_cart,
+                color: Colors.black,
+                size: 30,
+              ),
+            ),
+          ),
+        ],
+      ),
       body: BlocBuilder<ProductBloc, ProductsStates>(
         bloc: _productBloc,
         builder: (context, state) {
-          if (state is ShowLoadingState) {
-            return const CircularProgressIndicator();
-          }
-
-          return Scaffold();
+          final products = state.modelData.products ?? [];
+          final categories = state.modelData.categories ?? [];
+          final indexSnapshot = state.modelData.selectIndex ?? 0;
+          return Column(
+            children: [
+              const SizedBox(
+                height: 50,
+              ),
+              SizedBox(
+                height: 70,
+                child: ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  padding: const EdgeInsets.only(top: 20),
+                  itemCount: categories.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return CategoriesWidget(
+                      text: categories[index],
+                      isSelected: indexSnapshot == index,
+                      action: () async {
+                        _productBloc.add(SelectIndex(index: index));
+                        _productBloc.add(GetProductsByCategoryEvent(
+                            category: categories[index]));
+                      },
+                    );
+                  },
+                ),
+              ),
+              const SizedBox(
+                height: 50,
+              ),
+              Expanded(
+                child: GridView.builder(
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    crossAxisSpacing: 10,
+                    mainAxisSpacing: 10,
+                  ),
+                  padding: const EdgeInsets.only(top: 20, left: 10, right: 10),
+                  itemCount: state.modelData.products?.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return GestureDetector(
+                      onTap: () {
+                        Navigator.pushNamed(
+                          context,
+                          '/detail_screen',
+                          arguments: products[index],
+                        );
+                      },
+                      child: Hero(
+                        tag: products[index].id,
+                        child: ProductWidget(
+                          product: products[index],
+                          iconButton: IconButton(
+                            key: const Key("product-widget"),
+                            onPressed: () {
+                              cartViewModel.addToCart(products[index]);
+                            },
+                            icon: const Icon(
+                              Icons.add,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
+                      ),
+                    );
+                  },
+                ),
+              ),
+            ],
+          );
         },
       ),
+    );
+  }
+
+  @override
+  void showLoading() {
+    AlertDialog loadingDialog = const AlertDialog(
+      elevation: 0,
+      backgroundColor: Colors.transparent,
+      content: LoadingWidget(),
+    );
+
+    showDialog(
+      context: context,
+      barrierColor: Colors.transparent,
+      builder: (BuildContext context) {
+        return loadingDialog;
+      },
     );
   }
 }
