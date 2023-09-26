@@ -14,7 +14,7 @@ class HomeScreen2 extends StatefulWidget {
 class _HomeScreen2State extends State<HomeScreen2> {
   late final ArgsProductVieModel _argsProductVieModel;
 
-  final ProductBloc _productBloc = ProductBloc(_argsProductVieModel);
+  late final ProductBloc _productBloc = ProductBloc(_argsProductVieModel);
 
   @override
   void initState() {
@@ -31,6 +31,8 @@ class _HomeScreen2State extends State<HomeScreen2> {
           if (state is ShowLoadingState) {
             return const CircularProgressIndicator();
           }
+
+          return Scaffold();
         },
       ),
     );
