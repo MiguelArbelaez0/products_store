@@ -25,8 +25,14 @@ class _HomeScreen2State extends State<HomeScreen2> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: BlocBuilder<ProductsEvent, ProductsStates>(
-          bloc: _productBloc, builder: (context, state) {}),
+      body: BlocBuilder<ProductBloc, ProductsStates>(
+        bloc: _productBloc,
+        builder: (context, state) {
+          if (state is ShowLoadingState) {
+            return const CircularProgressIndicator();
+          }
+        },
+      ),
     );
   }
 }
