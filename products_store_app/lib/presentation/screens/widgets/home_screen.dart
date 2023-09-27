@@ -60,7 +60,29 @@ class _HomeScreenState extends State<HomeScreen> {
           final products = state.modelData.products ?? [];
           final categories = state.modelData.categories ?? [];
           final indexSnapshot = state.modelData.selectIndex ?? 0;
+          if (state is ShowLoadingState) {
+            WidgetsBinding.instance.addPostFrameCallback((_) {
+              AlertDialog loadingDialog = const AlertDialog(
+                elevation: 0,
+                backgroundColor: Colors.transparent,
+                content: LoadingWidget(),
+              );
 
+              showDialog(
+                context: context,
+                barrierColor: Colors.transparent,
+                builder: (BuildContext context) {
+                  return loadingDialog;
+                },
+              );
+            });
+          }
+
+          if (state is HideLoadingState) {
+            Future.delayed(const Duration(seconds: 2), () {
+              Navigator.pop(context);
+            });
+          }
           return Column(
             children: [
               const SizedBox(
@@ -131,23 +153,6 @@ class _HomeScreenState extends State<HomeScreen> {
           );
         },
       ),
-    );
-  }
-
-  @override
-  void showLoading() {
-    AlertDialog loadingDialog = const AlertDialog(
-      elevation: 0,
-      backgroundColor: Colors.transparent,
-      content: LoadingWidget(),
-    );
-
-    showDialog(
-      context: context,
-      barrierColor: Colors.transparent,
-      builder: (BuildContext context) {
-        return loadingDialog;
-      },
     );
   }
 }
