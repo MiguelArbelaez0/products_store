@@ -96,7 +96,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     mainAxisSpacing: 10,
                   ),
                   padding: const EdgeInsets.only(top: 20, left: 10, right: 10),
-                  itemCount: state.modelData.products?.length ?? 0,
+                  itemCount: products.length,
                   itemBuilder: (BuildContext context, int index) {
                     final product = state.modelData.products?[index];
                     return GestureDetector(
