@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:products_store_app/domain/entitis/products_entiti.dart';
 import 'package:products_store_app/presentation/blocs/products_bloc/products_events.dart';
@@ -27,6 +29,7 @@ class ProductBloc extends Bloc<ProductsEvent, ProductsStates> {
   final ArgsProductVieModel2 _argsProductVieModel;
   ProductBloc(this._argsProductVieModel) : super(initialState) {
     on<GetProductsEvent>((event, emit) => invokeProducts(event, emit));
+    on<GetCategoriesEvent>((event, emit) => invokeCategories(event, emit));
   }
 
   invokeProducts(GetProductsEvent event, Emitter<ProductsStates> emit) async {
@@ -35,6 +38,16 @@ class ProductBloc extends Bloc<ProductsEvent, ProductsStates> {
         await _argsProductVieModel._getProductsUseCase.invokeGetProducts();
     emit(HideLoadingState(state.modelData.copyWith(products: products)));
   }
+
+  invokeCategories(
+      GetCategoriesEvent event, Emitter<ProductsStates> emit) async {
+    emit(ShowLoadingState(state.modelData));
+    List<String> categories =
+        await _argsProductVieModel._getCategoriesUseCase.invokeGetCategories();
+    emit(HideLoadingState(state.modelData.copyWith(categories: categories)));
+  }
+
+  selectIndex(int index) async {}
 
   static HideLoadingState get initialState => HideLoadingState(ModelData());
 }

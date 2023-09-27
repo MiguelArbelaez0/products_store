@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:products_store_app/presentation/screens/cart_screen.dart';
-import 'package:products_store_app/presentation/screens/home_screen.dart';
 
 import '../../domain/entitis/products_entiti.dart';
 import '../screens/detail_screen.dart';
+import '../screens/widgets/home_screen.dart';
 
 class Routes {
   static Route<dynamic> generateRoute(RouteSettings settings) {

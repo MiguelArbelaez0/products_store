@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:products_store_app/presentation/interfaces/home_interface.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:products_store_app/presentation/blocs/products_bloc/products_bloc.dart';
+import 'package:products_store_app/presentation/blocs/products_bloc/products_events.dart';
+import 'package:products_store_app/presentation/blocs/products_bloc/products_states.dart';
+
 import 'package:products_store_app/presentation/screens/widgets/categories.widget.dart';
 
 import 'package:products_store_app/presentation/screens/widgets/product_widget.dart';
 import 'package:products_store_app/presentation/view_model/cart_view_model.dart';
 import 'package:products_store_app/presentation/view_model/products_view_model.dart';
 
-import '../../domain/entitis/products_entiti.dart';
-import 'widgets/loading_widget.dart';
+import 'loading_widget.dart';
 
 class HomeScreen extends StatefulWidget {
   final ArgsProductVieModel _argsProductVieModel;
@@ -18,17 +21,15 @@ class HomeScreen extends StatefulWidget {
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> implements HomeInterface {
-  late final ProductsViewModel productsViewModel;
+class _HomeScreenState extends State<HomeScreen> {
+  late final ProductBloc _productBloc;
 
   @override
   void initState() {
     super.initState();
-    productsViewModel = ProductsViewModel(this, widget._argsProductVieModel);
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      productsViewModel.invokeProducts();
-      productsViewModel.invokeCategories();
-    });
+    _productBloc = ProductBloc(ArgsProductVieModel2())
+      ..add(GetProductsEvent())
+      ..add(GetCategoriesEvent());
   }
 
   @override
@@ -53,77 +54,67 @@ class _HomeScreenState extends State<HomeScreen> implements HomeInterface {
           ),
         ],
       ),
-      body: Column(
-        children: [
-          const SizedBox(
-            height: 50,
-          ),
-          SizedBox(
-            height: 70,
-            child: StreamBuilder<List<String>>(
-              stream: productsViewModel.categoryStrem,
-              initialData: const [],
-              builder: (BuildContext context, AsyncSnapshot snapshot) {
-                final List<String> categories = snapshot.data;
-                return ListView.builder(
+      body: BlocBuilder<ProductBloc, ProductsStates>(
+        bloc: _productBloc,
+        builder: (context, state) {
+          final products = state.modelData.products ?? [];
+          final categories = state.modelData.categories ?? [];
+          final indexSnapshot = state.modelData.selectIndex ?? 0;
+
+          return Column(
+            children: [
+              const SizedBox(
+                height: 50,
+              ),
+              SizedBox(
+                height: 70,
+                child: ListView.builder(
                   scrollDirection: Axis.horizontal,
                   padding: const EdgeInsets.only(top: 20),
                   itemCount: categories.length,
                   itemBuilder: (BuildContext context, int index) {
-                    return StreamBuilder<int>(
-                      stream: productsViewModel.indexStream,
-                      builder: (BuildContext context,
-                          AsyncSnapshot<int> indexSnapshot) {
-                        return CategoriesWidget(
-                          text: categories[index],
-                          isSelected: indexSnapshot.data == index,
-                          action: () async {
-                            await productsViewModel.selectIndex(index);
-                            await productsViewModel
-                                .invokeGetProductsByCategory(categories[index]);
-                          },
-                        );
+                    return CategoriesWidget(
+                      text: categories[index],
+                      isSelected: indexSnapshot == index,
+                      action: () async {
+                        _productBloc.add(SelectIndex(index: index));
+                        _productBloc.add(GetProductsByCategoryEvent(
+                            category: categories[index]));
                       },
                     );
                   },
-                );
-              },
-            ),
-          ),
-          const SizedBox(
-            height: 50,
-          ),
-          Expanded(
-            child: StreamBuilder<List<Product>>(
-              stream: productsViewModel.productsStream,
-              initialData: const [],
-              builder: (BuildContext context, AsyncSnapshot snapshot) {
-                final List<Product> products = snapshot.data;
-                return GridView.builder(
+                ),
+              ),
+              const SizedBox(
+                height: 50,
+              ),
+              Expanded(
+                child: GridView.builder(
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2,
                     crossAxisSpacing: 10,
                     mainAxisSpacing: 10,
                   ),
                   padding: const EdgeInsets.only(top: 20, left: 10, right: 10),
-                  itemCount: products.length,
+                  itemCount: state.modelData.products?.length ?? 0,
                   itemBuilder: (BuildContext context, int index) {
+                    final product = state.modelData.products?[index];
                     return GestureDetector(
                       onTap: () {
                         Navigator.pushNamed(
                           context,
                           '/detail_screen',
-                          arguments: products[index],
+                          arguments: product,
                         );
                       },
                       child: Hero(
-                        tag: products[index].id,
+                        tag: product!.id,
                         child: ProductWidget(
-                          product: products[index],
+                          product: product,
                           iconButton: IconButton(
                             key: const Key("product-widget"),
                             onPressed: () {
-                              cartViewModel.addToCart(products[index]);
+                              cartViewModel.addToCart(product);
                             },
                             icon: const Icon(
                               Icons.add,
@@ -134,20 +125,13 @@ class _HomeScreenState extends State<HomeScreen> implements HomeInterface {
                       ),
                     );
                   },
-                );
-              },
-            ),
-          ),
-        ],
+                ),
+              ),
+            ],
+          );
+        },
       ),
     );
-  }
-
-  @override
-  void hideLoading() {
-    Navigator.of(context).pop();
-
-    setState(() {});
   }
 
   @override

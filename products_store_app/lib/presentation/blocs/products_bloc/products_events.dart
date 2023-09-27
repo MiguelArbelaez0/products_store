@@ -1,9 +1,15 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+
 abstract class ProductsEvent {}
 
 class GetProductsEvent extends ProductsEvent {}
 
-class GetCategoriesEvent extends ProductsEvent {}
+class GetCategoriesEvent extends ProductsEvent {
+  final List<String>? categories;
+  GetCategoriesEvent({
+    this.categories,
+  });
+}
 
 class GetProductsByCategoryEvent extends ProductsEvent {
   final String category;
