@@ -10,7 +10,7 @@ import 'package:products_store_app/presentation/screens/widgets/product_widget.d
 import 'package:products_store_app/presentation/view_model/cart_view_model.dart';
 import 'package:products_store_app/presentation/view_model/products_view_model.dart';
 
-import 'loading_widget.dart';
+import 'widgets/loading_widget.dart';
 
 class HomeScreen extends StatefulWidget {
   final ArgsProductVieModel _argsProductVieModel;
@@ -61,27 +61,7 @@ class _HomeScreenState extends State<HomeScreen> {
           final categories = state.modelData.categories ?? [];
           final indexSnapshot = state.modelData.selectIndex ?? 0;
           if (state is ShowLoadingState) {
-            WidgetsBinding.instance.addPostFrameCallback((_) {
-              AlertDialog loadingDialog = const AlertDialog(
-                elevation: 0,
-                backgroundColor: Colors.transparent,
-                content: LoadingWidget(),
-              );
-
-              showDialog(
-                context: context,
-                barrierColor: Colors.transparent,
-                builder: (BuildContext context) {
-                  return loadingDialog;
-                },
-              );
-            });
-          }
-
-          if (state is HideLoadingState) {
-            Future.delayed(const Duration(seconds: 2), () {
-              Navigator.pop(context);
-            });
+            return const Center(child: LoadingWidget());
           }
           return Column(
             children: [

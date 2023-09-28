@@ -6,7 +6,7 @@ import 'package:products_store_app/domain/entitis/products_entiti.dart';
 import 'package:products_store_app/domain/use_cases/get_category_use_case.dart';
 import 'package:products_store_app/domain/use_cases/get_product_by_category_use_case.dart';
 import 'package:products_store_app/domain/use_cases/get_product_use_case.dart';
-import 'package:products_store_app/presentation/screens/widgets/home_screen.dart';
+import 'package:products_store_app/presentation/screens/home_screen.dart';
 
 import 'package:products_store_app/presentation/view_model/products_view_model.dart';
 

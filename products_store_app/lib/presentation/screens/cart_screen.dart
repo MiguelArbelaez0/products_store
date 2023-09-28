@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:products_store_app/presentation/screens/widgets/home_screen.dart';
+import 'package:products_store_app/presentation/screens/home_screen.dart';
 
 import '../../domain/entitis/products_entiti.dart';
 import '../view_model/cart_view_model.dart';

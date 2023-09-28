@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:products_store_app/presentation/blocs/products_bloc/products_bloc.dart';
 
 import 'package:products_store_app/presentation/routes/routes.dart';
-import 'package:products_store_app/presentation/screens/widgets/home_screen.dart';
+import 'package:products_store_app/presentation/screens/home_screen.dart';
 
 void main() {
   runApp(const MyApp());

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:products_store_app/domain/entitis/products_entiti.dart';
 
-import 'package:products_store_app/presentation/screens/widgets/home_screen.dart';
+import 'package:products_store_app/presentation/screens/home_screen.dart';
 import 'package:products_store_app/presentation/view_model/cart_view_model.dart';
 
 class DetailScreen extends StatefulWidget {
