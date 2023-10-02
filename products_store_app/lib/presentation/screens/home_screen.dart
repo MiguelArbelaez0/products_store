@@ -79,7 +79,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       text: categories[index],
                       isSelected: indexSnapshot == index,
                       action: () async {
-                        _productBloc.add(SelectIndex(index: index));
+                        _productBloc.add(SelectIndexEvent(index: index));
                         _productBloc.add(GetProductsByCategoryEvent(
                             category: categories[index]));
                       },

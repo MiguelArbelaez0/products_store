@@ -18,9 +18,9 @@ class GetProductsByCategoryEvent extends ProductsEvent {
 
 class SetCategoryEvent extends ProductsEvent {}
 
-class SelectIndex extends ProductsEvent {
+class SelectIndexEvent extends ProductsEvent {
   final int index;
-  SelectIndex({
+  SelectIndexEvent({
     required this.index,
   });
 }
