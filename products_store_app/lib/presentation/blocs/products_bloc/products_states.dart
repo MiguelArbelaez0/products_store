@@ -6,8 +6,8 @@ abstract class ProductsStates {
   ProductsStates(this.modelData);
 }
 
-class HideLoadingState extends ProductsStates {
-  HideLoadingState(super.modelData);
+class NormalState extends ProductsStates {
+  NormalState(super.modelData);
 }
 
 class ShowLoadingState extends ProductsStates {
