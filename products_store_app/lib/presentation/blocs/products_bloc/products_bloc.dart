@@ -31,7 +31,8 @@ class ProductBloc extends Bloc<ProductsEvent, ProductsStates> {
     on<GetProductsEvent>((event, emit) => invokeProducts(event, emit));
     on<GetCategoriesEvent>((event, emit) => invokeCategories(event, emit));
     on<SelectIndexEvent>((event, emit) => selectIndex(event, emit));
-    // on<GetProductsByCategoryEvent>((event, emit) => )
+    on<GetProductsByCategoryEvent>(
+        (event, emit) => invokeGetProductsByCategory(event, emit));
   }
 
   invokeProducts(GetProductsEvent event, Emitter<ProductsStates> emit) async {
@@ -48,14 +49,16 @@ class ProductBloc extends Bloc<ProductsEvent, ProductsStates> {
         await _argsProductVieModel._getCategoriesUseCase.invokeGetCategories();
     emit(NormalState(state.modelData.copyWith(categories: categories)));
   }
-  //  invokeGetProductsByCategory(String category) async {
-  //   _homeInterface.showLoading();
-  //   List<Product> products = await _argsProductVieModel
-  //       ._getProductByCategoryUseCase
-  //       .invokeGetProductsByCategory(category);
-  //   _productsController.add(products);
-  //   _homeInterface.hideLoading();
-  // }
+
+  invokeGetProductsByCategory(
+      GetProductsByCategoryEvent event, Emitter<ProductsStates> emit) async {
+    emit(ShowLoadingState(state.modelData));
+    List<Product> products = await _argsProductVieModel
+        ._getProductByCategoryUseCase
+        .invokeGetProductsByCategory(event.category);
+    ModelData modelData = state.modelData.copyWith(products: products);
+    emit(NormalState(modelData));
+  }
 
   selectIndex(SelectIndexEvent event, Emitter<ProductsStates> emit) async {
     ModelData modelData = state.modelData.copyWith(selectIndex: event.index);
