@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:products_store_app/domain/entitis/products_entiti.dart';
 import 'package:products_store_app/presentation/blocs/products_bloc/products_events.dart';
@@ -31,6 +29,7 @@ class ProductBloc extends Bloc<ProductsEvent, ProductsStates> {
     on<GetProductsEvent>((event, emit) => invokeProducts(event, emit));
     on<GetCategoriesEvent>((event, emit) => invokeCategories(event, emit));
     on<SelectIndexEvent>((event, emit) => selectIndex(event, emit));
+    on<SetCategoryEvent>((event, emit) => setCategory(event, emit));
     on<GetProductsByCategoryEvent>(
         (event, emit) => invokeGetProductsByCategory(event, emit));
   }
@@ -62,6 +61,11 @@ class ProductBloc extends Bloc<ProductsEvent, ProductsStates> {
 
   selectIndex(SelectIndexEvent event, Emitter<ProductsStates> emit) async {
     ModelData modelData = state.modelData.copyWith(selectIndex: event.index);
+    emit(NormalState(modelData));
+  }
+
+  setCategory(SetCategoryEvent event, Emitter<ProductsStates> emit) async {
+    ModelData modelData = state.modelData.copyWith(category: event.category);
     emit(NormalState(modelData));
   }
 

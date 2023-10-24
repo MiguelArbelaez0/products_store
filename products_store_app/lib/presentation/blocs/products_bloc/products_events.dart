@@ -16,7 +16,12 @@ class GetProductsByCategoryEvent extends ProductsEvent {
   });
 }
 
-class SetCategoryEvent extends ProductsEvent {}
+class SetCategoryEvent extends ProductsEvent {
+  final String category;
+  SetCategoryEvent({
+    required this.category,
+  });
+}
 
 class SelectIndexEvent extends ProductsEvent {
   final int index;
